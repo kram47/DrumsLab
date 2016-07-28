@@ -1,0 +1,26 @@
+#canvas_container {
+  width: 600px;
+  height: 1200px;
+  border: 1px solid #aaa;
+}
+
+.score {
+  stroke: #3b4449;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.score-played {
+  fill: #64a0c1;
+  /* Gradient ne fonctionne pas !! */
+  fill: -webkit-linear-gradient(#526c7a, #64a0c1);
+  fill: linear-gradient(#526c7a, #64a0c1);
+}
+
+.measure-title {
+  stroke: #3b4449;
+  stroke-linejoin: round;
+  font-size: 18; 
+  font-family: "Helvetica, sans-serif";
+}
+
