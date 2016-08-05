@@ -3,6 +3,9 @@
   $(document).ready(function (){
 
     var paper = new Raphael(document.getElementById('canvas_container'), 600, 1200);
+    var __TRIPLET__ = 3;
+    var __DOUBLE_CROCHE__ = 4;
+    var __SEXTOLET__ = 6;
 
     function drawBeat(listNotes, xStart, yStart, baseBeatSize, beatSize) {
       var rectangles = [];
@@ -45,7 +48,16 @@
     function drawOstinatoMeasure(ostinato, xStart = 0, yStart = 0) {
       var xPosition = xStart, yPosition = yStart;
       var measure = [];
-
+      
+      /*
+      measure = [
+        [0,0,1,0], // Beat (Ostinato)
+        [0,0,1,0], // Beat (Ostinato)
+        [0,0,1,0], // Beat (Ostinato)
+        [0,0,1,0], // Beat (Ostinato)
+      ]
+      */
+      
       for ( i = 0 ; i < 4 ; i++ ) {
         measure.push(ostinato);
       }
@@ -78,8 +90,47 @@
 
 
     $.getJSON( "data/ostinati.json", function( ostinati ) {
-      drawOstinatiList(ostinati);
+      console.log("j'ai récupéré le json !!");
+      // drawOstinatiList(ostinati);
     });
+
+    measureBinary = [
+      [0,1,1,0],
+      [1,0,1,0],
+      [0,0,1,1],
+      [0,1,1,1],
+    ];
+    drawMeasure(measureBinary);
+
+
+    function convertMeasureFlow(measure, oldFlow, newFlow) {
+      var outputMeasure = [];
+      var newBeat = [];
+      var beatsNumber = measure.length;
+      var i_beat, i_croche;
+
+      for (i = 0 ; i < oldFlow * beatsNumber ; i++) {
+        i_beat = Math.floor(i / 4); // Get the current beat of the measure depending on 'i'
+        i_croche = i % 4;           // Get the current croche of the beat depending on 'i'
+
+        console.log("measure["+i_beat+"]["+i_croche+"] = " + measure[i_beat][i_croche]);
+
+        newBeat.push(measure[i_beat][i_croche]);
+        if (newBeat.length == newFlow) {
+          outputMeasure.push(newBeat);
+          newBeat = [];
+          if (outputMeasure.length == measure.length) {
+            break;
+          }
+        }
+      }
+
+      console.log(outputMeasure);
+    }
+
+
+    convertMeasureFlow(measureBinary, __DOUBLE_CROCHE__, __TRIPLET__)
+
 
   });
 
