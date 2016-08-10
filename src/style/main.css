@@ -11,7 +11,8 @@
 }
 
 .score-played {
-  fill: #64a0c1;
+  /* fill: #64a0c1;
+  */
   /* Gradient ne fonctionne pas !! */
   fill: -webkit-linear-gradient(#526c7a, #64a0c1);
   fill: linear-gradient(#526c7a, #64a0c1);

@@ -14,8 +14,26 @@
         var rectangle = paper.rect(xStart + index * beatSize, yStart, beatSize, baseBeatSize);
         rectangle.node.setAttribute("class","score");
 
-        if (current == 1)
+        if (current == 1) {
           rectangle.node.setAttribute("class","score score-played");
+          rectangle.attr({
+            "gradient": '90-#2980b9-#3498db'
+          });
+        }
+
+        if (current == 2) {
+          rectangle.node.setAttribute("class","score score-ghost");
+          rectangle.attr({
+            "gradient": '90-#bdc3c7-#ecf0f1'
+          });
+        }
+
+        if (current == 3) {
+          rectangle.node.setAttribute("class","score score-accent");
+          rectangle.attr({
+            "gradient": '90-#c0392b-#e74c3c'
+          });
+        }
 
         rectangles.push({
           played : current,
@@ -72,7 +90,7 @@
       text.attr({
         "font-size": 15,
         "font-family": "Helvetica, sans-serif",
-        "text-anchor": "start"
+        "text-anchor": "start",
       });
     }
     function drawOstinatiList(ostinati, xStart = 0, yStart = 0) {
@@ -95,8 +113,8 @@
     });
 
     measureBinary = [
-      [0,1,1,0],
-      [1,0,1,0],
+      [0,2,2,0],
+      [1,0,3,0],
       [0,0,1,1],
       [0,1,1,1],
     ];
@@ -126,11 +144,13 @@
       }
 
       console.log(outputMeasure);
+      return outputMeasure;
     }
 
 
-    convertMeasureFlow(measureBinary, __DOUBLE_CROCHE__, __TRIPLET__)
+    var ternaryMeasure = convertMeasureFlow(measureBinary, __DOUBLE_CROCHE__, __TRIPLET__)
 
+    drawMeasure(ternaryMeasure, 0, 75);
 
   });
 

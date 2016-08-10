@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "raphael": "^2.2.1",
-    "jquery": "^3.1.0"
+    "jquery": "^3.1.0",
+    "vexflow": "^1.2.70"
   }
 }
