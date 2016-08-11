@@ -1,0 +1,8 @@
+english names =
+
+    ronde : whole note
+    blanche : hald note
+    noire : quarter
+    soupir : quarter rest
+    croche : eighth note
+    double croche : sixteenth note
