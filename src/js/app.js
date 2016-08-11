@@ -5,10 +5,14 @@
         var paper = new Raphael(document.getElementById('canvas_container'), 600, 1200);
 
         var flow = {
+            quarter : 1,
+            eighth : 2,
             triplet : 3,
-            doubleCroche : 4,
+            sixteenth : 4,
+            quintuplet : 5
             sextolet : 6,
-     };
+            thirtySecond : 8,
+        };
 
         function drawBeat(listNotes, xStart, yStart, baseBeatSize, beatSize) {
             var rectangles = [];
@@ -151,7 +155,7 @@
         }
 
 
-        var ternaryMeasure = convertMeasureFlow(measureBinary, flow.eighteenth, flow.triplet)
+        var ternaryMeasure = convertMeasureFlow(measureBinary, flow.sixteenth, flow.triplet)
 
         drawMeasure(ternaryMeasure, 0, 75);
 

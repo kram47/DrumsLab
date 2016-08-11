@@ -1,8 +1,21 @@
-english names =
+link : https://books.google.fr/books?id=flAPwoxac78C&pg=PA140&lpg=PA140&dq=division+rythmique+sextolet+anglais&source=bl&ots=H4RMMbag58&sig=cjqv1xE9XmCIGsscc1qWEDP7BTM&hl=fr&sa=X&ved=0ahUKEwi1xvbAy7nOAhWJfhoKHQyyBqIQ6AEINTAE#v=onepage&q=division%20rythmique%20sextolet%20anglaissextolet&f=false
 
-    ronde : whole note
-    blanche : hald note
-    noire : quarter
-    soupir : quarter rest
-    croche : eighth note
-    double croche : sixteenth note
+english names :
+{
+    "ronde" : "whole note"
+    "blanche" : "hald note"
+    "noire" : "quarter"
+    "soupir" : "quarter rest"
+    "croche" : "eighth note"
+    "double croche" : "sixteenth note"
+    "triolet" : "triplet"
+    "sextolet" : "sextuplet"
+    "liaison" : "tie"
+    "note liée" : "tied note"
+    "point" : " dot"
+    "note pointée" : "dotted note"
+
+    "mesure" : "measure, bar"
+    "signature rythmique" : "time signature"
+    "temps" : "beat"
+}
