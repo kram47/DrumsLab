@@ -38,20 +38,24 @@ var app = app || {};
 
         // Launch tests
         var barBinary = [
-            [0,2,2,0],
-            [1,0,3,0],
-            [0,0,1,1],
-            [0,1,1,1],
+            [1,0,0,1],
+            [1,0,0,1],
+            [1,0,0,1],
+            [1,0,0,1],
         ];
         drumBlock.drawBar(barBinary);
 
-        var ternaryBar = transformation.convertBarFlow(barBinary, config.flow.sixteenth, config.flow.triplet)
+        var ternaryBar = transformation.convertBarFlow(
+            barBinary,
+            config.flow.sixteenth,
+            config.flow.eight,
+            transformation.config.fillGapMode.circle);
         drumBlock.drawBar(ternaryBar, 0, 75);
 
 
         $.getJSON( "data/ostinati.json", function( ostinati ) {
             console.log("j'ai récupéré le json !!");
-            drumBlock.drawOstinatiList(ostinati);
+            // drumBlock.drawOstinatiList(ostinati);
         });
     }
 

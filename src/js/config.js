@@ -27,7 +27,7 @@ var config = config || {};
         triplet : 3,
         sixteenth : 4,
         quintuplet : 5,
-        sextolet : 6,
+        sextuplet : 6,
         thirtySecond : 8,
     };
 
