@@ -1,7 +1,7 @@
 /**
  *
  * @file
- *     drumBlock.config..js
+ *     drumBlock.config.js
  * @description
  *     Configuration for module : drumBlock
  * @author
