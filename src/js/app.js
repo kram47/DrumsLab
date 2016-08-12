@@ -11,7 +11,7 @@
 
 var app = app || {};
 
-(function (publics){
+(function (self){
 
     "use strict";
     var _name_ = "App";
@@ -20,7 +20,7 @@ var app = app || {};
     /*
         Initialisation du module
      */
-    publics.init = function()
+    self.init = function()
     {
         console.log("["+_name_+"] " + "Initialisation");
 

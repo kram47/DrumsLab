@@ -11,7 +11,7 @@
 
 var config = config || {};
 
-(function (publics) {
+(function (self) {
 
     "use strict";
 
@@ -21,7 +21,7 @@ var config = config || {};
     /*
         Définit les débit de chaque division du temps
      */
-    publics.flow = {
+    self.flow = {
         quarter : 1,
         eighth : 2,
         triplet : 3,

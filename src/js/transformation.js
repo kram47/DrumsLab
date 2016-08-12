@@ -11,7 +11,7 @@
 
 var transformation = transformation || {};
 
-(function (publics) {
+(function (self) {
 
     "use strict";
     var privates = {};
@@ -20,7 +20,7 @@ var transformation = transformation || {};
     /*
         Initialisation du module
      */
-    publics.init = function () {
+    self.init = function () {
         console.log("["+_name_+"] " + "Initialisation");
     };
 
@@ -28,7 +28,7 @@ var transformation = transformation || {};
         Conversion de débit d'une mesure.
         La mesure passe d'un débit A à un débit B, les notes restent les mêmes
      */
-    publics.convertBarFlow = function(bar, oldFlow, newFlow) {
+    self.convertBarFlow = function(bar, oldFlow, newFlow) {
         var outputBar = [];
         var newBeat = [];
         var beatsNumber = bar.length;
