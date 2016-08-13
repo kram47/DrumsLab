@@ -15,12 +15,12 @@ var transformation = transformation || {};
 
     "use strict";
 
-    self.config = {
-        "fillGapMode" : {
-            "empty" : 0,
-            "circle" : 1,
-            "random" : 2
-        }
+    self.config = self.config || {};
+
+    self.config.fillGapMode = {
+        "empty" : 0,
+        "circle" : 1,
+        "random" : 2
     };
 
 })(transformation);

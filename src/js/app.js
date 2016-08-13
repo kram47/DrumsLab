@@ -36,6 +36,11 @@ var app = app || {};
      */
     privates.launchTest = function () {
 
+        privates.conversion();
+        // privates.ostinatiList();
+    }
+
+    privates.conversion = function() {
         // Launch tests
         var barBinary = [
             [1,0,0,1],
@@ -45,18 +50,20 @@ var app = app || {};
         ];
         drumBlock.drawBar(barBinary);
 
+
         var ternaryBar = transformation.convertBarFlow(
             barBinary,
-            config.flow.sixteenth,
-            config.flow.eight,
-            transformation.config.fillGapMode.circle);
+            self.config.flow.sixteenth,
+            self.config.flow.sextuplet,
+            transformation.config.fillGapMode.empty);
         drumBlock.drawBar(ternaryBar, 0, 75);
+    };
 
-
+    privates.ostinatiList = function() {
         $.getJSON( "data/ostinati.json", function( ostinati ) {
             console.log("j'ai récupéré le json !!");
-            // drumBlock.drawOstinatiList(ostinati);
+            drumBlock.drawOstinatiList(ostinati);
         });
-    }
+    };
 
 })(app);

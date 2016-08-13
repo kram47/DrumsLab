@@ -1,7 +1,7 @@
 #canvas_container {
   width: 600px;
   height: 1200px;
-  border: 1px solid #aaa;
+  /*border: 1px solid #aaa;*/
 }
 
 .score {
