@@ -1,0 +1,30 @@
+[
+      {
+            "title" : "Noire",
+            "rythmCode" : [1,0,0]
+      },
+      {
+            "title" : "Croche, Demi Soupir, Croche",
+            "rythmCode" : [1,0,1]
+      },
+      {
+            "title" : "Deux Croches, Demi Soupir",
+            "rythmCode" : [1,1,0]
+      },
+      {
+            "title" : "Demi Soupir, Deux Croches",
+            "rythmCode" : [0,1,1]
+      },
+      {
+            "title" : "Soupir, Croche",
+            "rythmCode" : [0,0,1]
+      },
+      {
+            "title" : "Demi soupir, Noire",
+            "rythmCode" : [0,1,0]
+      },
+      {
+            "title" : "Trois Croches",
+            "rythmCode" : [1,1,1]
+      }
+]
