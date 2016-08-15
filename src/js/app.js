@@ -36,8 +36,24 @@ var app = app || {};
      */
     privates.launchTest = function () {
 
+        var bar  = [
+            [0,1,2,3],
+            [1,0,0,1],
+            [1,0,0,1],
+            [8,9,10,11]
+        ];
+
+        var maMesure = new Bar(bar);
+        console.log(maMesure);
+        console.log(maMesure.getScoreByIndex(15));
+        console.log(maMesure.convertIndexIntoObject(6));
+
         privates.conversion();
-        // privates.ostinatiList();
+        //privates.ostinatiList();
+
+
+        // transformation.addAccent(bar, 5);
+
     }
 
     privates.conversion = function() {
@@ -60,7 +76,7 @@ var app = app || {};
     };
 
     privates.ostinatiList = function() {
-        $.getJSON( "data/ostinati.json", function( ostinati ) {
+        $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
             console.log("j'ai récupéré le json !!");
             drumBlock.drawOstinatiList(ostinati);
         });
