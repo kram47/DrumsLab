@@ -14,7 +14,6 @@ var transformation = transformation || {};
 (function (self) {
 
     "use strict";
-    var privates = {};
     var _name_ = "Transformation";
 
     /*
@@ -62,7 +61,7 @@ var transformation = transformation || {};
                         break;
                     case self.config.fillGapMode.random:
                         console.log("je suis en mode random");
-                        newBeat.push(Math.floor(Math.random() * 4));
+                        newBeat.push(_.random(0, 4));
                         break;
                     default:
                         console.log("pas de valeur");

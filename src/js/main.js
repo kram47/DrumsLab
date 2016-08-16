@@ -9,15 +9,14 @@
  *
  */
 
-(function($) {
+(function() {
 
     "use strict";
-    var privates = {};
 
-    privates.init = function () {
+    function init () {
         app.init();
     };
 
-    privates.init();
+    init();
 
-})(jQuery);
+})();

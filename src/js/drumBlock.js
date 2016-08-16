@@ -15,7 +15,6 @@ var drumBlock = drumBlock || {};
 
     "use strict";
 
-    var privates = {};
     var _name_ = "DrumBlock";
     var _paper_;
 

@@ -15,7 +15,6 @@ var app = app || {};
 
     "use strict";
     var _name_ = "App";
-    var privates = {};
 
     /*
         Initialisation du module
@@ -28,13 +27,13 @@ var app = app || {};
         drumBlock.init();
         transformation.init();
 
-        privates.launchTest();
+        launchTest();
     };
 
     /*
         Lancement des tests de développement en cours
      */
-    privates.launchTest = function () {
+    function launchTest() {
 
         var bar  = [
             [0,1,2,3],
@@ -45,18 +44,19 @@ var app = app || {};
 
         var maMesure = new Bar(bar);
         console.log(maMesure);
-        console.log(maMesure.getScoreByIndex(15));
+
+        for (var i = 0; i < 16; i++)
+            console.log("bar["+i+"] = " + maMesure.getScoreByIndex(i));
         console.log(maMesure.convertIndexIntoObject(6));
 
-        privates.conversion();
-        //privates.ostinatiList();
+        //conversion();
+        ostinatiList();
 
 
         // transformation.addAccent(bar, 5);
-
     }
 
-    privates.conversion = function() {
+    function conversion() {
         // Launch tests
         var barBinary = [
             [1,0,0,1],
@@ -75,7 +75,7 @@ var app = app || {};
         drumBlock.drawBar(ternaryBar, 0, 75);
     };
 
-    privates.ostinatiList = function() {
+    function ostinatiList() {
         $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
             console.log("j'ai récupéré le json !!");
             drumBlock.drawOstinatiList(ostinati);
