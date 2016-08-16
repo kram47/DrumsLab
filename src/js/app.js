@@ -45,10 +45,12 @@ var app = app || {};
         var maMesure = new Bar(bar);
         console.log(maMesure);
 
-        for (var i = 0; i < 16; i++)
+        for (var i = 0; i < 16; i++) {
             console.log("bar["+i+"] = " + maMesure.getScoreByIndex(i));
-        console.log(maMesure.convertIndexIntoObject(6));
-
+            console.log(maMesure.convertIndexIntoCoordinates(i));
+            maMesure.setScoreByIndex(12, i);
+        }
+        console.log(maMesure);
         //conversion();
         ostinatiList();
 
