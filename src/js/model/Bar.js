@@ -1,9 +1,20 @@
-var Bar = function(bar) {
-    this.bar = bar;
-    this.numberOfbeat = this.bar.length;
+/**
+ *
+ * @file
+ *     model/Bar.js
+ * @description
+ *     Represent a Bar with all actions and components
+ * @author
+ *     marc charton
+ *
+ */
+
+ var Bar = function(bar) {
+    this.arrays = bar;
+    this.numberOfbeat = this.arrays.length;
 
     var length = 0
-    this.bar.forEach(function (beat){
+    this.arrays.forEach(function (beat){
         length += beat.length;
     });
     this.length = length;
@@ -12,37 +23,37 @@ var Bar = function(bar) {
 /*
     Get the note at i position in the bar
 */
-Bar.prototype.getScoreByIndex = function (index) {
+Bar.prototype.getNoteByIndex = function (index) {
 
     if (index >= this.length || index < 0)
         throw new RangeError("Index can't be greater to bar's length");
 
-    var flatBar = _.flatten(this.bar);
+    var flatBar = _.flatten(this.arrays);
     return flatBar[index];
 };
 
 /*
     Set the note at i position in the bar
 */
-Bar.prototype.setScoreByIndex = function (value, index) {
+Bar.prototype.setNoteByIndex = function (value, index) {
 
     if (index >= this.length || index < 0)
         throw new RangeError("Index can't be greater to bar's length");
 
-    var coordinates = this.convertIndexIntoCoordinates(index);
-    this.bar[coordinates.beat][coordinates.note] = value;
+    var coordinates = this.convertIndex2Coordinates(index);
+    this.arrays[coordinates.beat][coordinates.note] = value;
 };
 
 /*
     Convert index number into 2 coordinates to access the 2 dimensional array easily
 */
-Bar.prototype.convertIndexIntoCoordinates = function (index) {
+Bar.prototype.convertIndex2Coordinates = function (index) {
 
     if (index >= this.length || index < 0)
         throw new RangeError("Index can't be greater to bar's length");
 
     for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
-        var beatLength = this.bar[beat_i].length;
+        var beatLength = this.arrays[beat_i].length;
         for (var note_i = 0 ; note_i < beatLength ; note_i++) {
             if (index == 0){
                 return {

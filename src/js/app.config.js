@@ -49,6 +49,16 @@ var app = app || {};
         "paraparadiddle" : {
             "fingering" : ["A,B,A,B,A,A,B,A,B,A,B,B"],
         },
-    }
+    };
+
+    /*
+        Liste des types de frappe
+    */
+    self.config.note = {
+        EMPTY : 0,
+        NORMAL : 1,
+        GHOST : 2,
+        ACCENT : 3
+    };
 
 })(app);

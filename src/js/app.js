@@ -34,28 +34,19 @@ var app = app || {};
         Lancement des tests de développement en cours
      */
     function launchTest() {
-
-        var bar  = [
+        var bar = new Bar([
             [0,1,2,3],
             [1,0,0,1],
             [1,0,0,1],
             [8,9,10,11]
-        ];
+        ]);
 
-        var maMesure = new Bar(bar);
-        console.log(maMesure);
+        //getNoteFromBar();
+        transformation.addAccent(bar, 5);
+        console.log('bar', bar);
 
-        for (var i = 0; i < 16; i++) {
-            console.log("bar["+i+"] = " + maMesure.getScoreByIndex(i));
-            console.log(maMesure.convertIndexIntoCoordinates(i));
-            maMesure.setScoreByIndex(12, i);
-        }
-        console.log(maMesure);
         //conversion();
         ostinatiList();
-
-
-        // transformation.addAccent(bar, 5);
     }
 
     function conversion() {
@@ -83,5 +74,29 @@ var app = app || {};
             drumBlock.drawOstinatiList(ostinati);
         });
     };
+
+    function getNoteFromBar() {
+        console.log("============ GET NOTE FROM BAR ============");
+
+        var bar = new Bar([
+            [0,1,2,3],
+            [1,0,0,1],
+            [1,0,0,1],
+            [8,9,10,11]
+        ]);
+        console.log("------ BAR ------");
+        console.log(bar);
+
+
+        console.log("------ Elements ------");
+        for (var i = 0; i < 16; i++) {
+            console.log("bar["+i+"] = " + bar.getNoteByIndex(i));
+            console.log(bar.convertIndexIntoCoordinates(i));
+            bar.setNoteByIndex(12, i);
+        }
+        console.log(bar);
+
+        console.log("============ end of GET NOTE FROM BAR ============");
+    }
 
 })(app);

@@ -86,25 +86,15 @@ var transformation = transformation || {};
     /*
         Ajout d'un accent sur la Nième croche
      */
-    self.addAccent = function(bar, offset) {
-        var beatsNumber = bar.length;
-        var length = 0;
+    self.addAccent = function(bar, index) {
+        return bar.setNoteByIndex(app.config.note.ACCENT, index);
+    };
 
-        bar.forEach(function (beat){
-            length += beat.length;
-        });
-        if (offset > length)
-            return bar;
-
-        var index = 0;
-        bar.forEach(function (beat){
-            beat.forEach(function (score){
-                index++;
-                if (index == offset)
-                    console.log("mainetantn !");
-                console.log(score);
-            });
-        });
+    /*
+        Ajout d'un accent sur la Nième croche
+    */
+    self.addAccent = function(bar, index) {
+        return bar.setNoteByIndex(app.config.note.ACCENT, index);
     };
 
 })(transformation);
