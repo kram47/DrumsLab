@@ -24,9 +24,11 @@
 /*
     Log bar a pretty way
 */
-Bar.prototype.toString = function () {
+Bar.prototype.toString = function (name = "{BarName}") {
 
     var output = "";
+    output += "-------------------------\n";
+    output += "--- " + name + "\n";
     output += "-------------------------\n";
 
     for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
@@ -63,7 +65,7 @@ Bar.prototype.setNote = function (coordinates, value = app.config.note.NORMAL) {
 /*
     Get the note at {beat,note} coordinates in the bar
 */
-Bar.prototype.getNote = function (index) {
+Bar.prototype.getNote = function (coordinates) {
 
     if (typeof(coordinates.beat) === "undefined" || typeof(coordinates.note) === "undefined")
         throw new RangeError("Bad Coordinates");

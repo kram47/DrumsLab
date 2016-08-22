@@ -34,46 +34,28 @@ var app = app || {};
         Lancement des tests de développement en cours
      */
     function launchTest() {
-        var bar = new Bar([
+
+        //addAccent();
+        //getNoteFromBar();
+        conversion();
+        //ostinatiList();
+    }
+
+    function conversion() {
+        // Launch tests
+        var barBinary = new Bar([
             [0,1,2,3],
             [1,0,0,1],
             [1,0,0,1],
             [8,9,10,11]
         ]);
-        var mask = new Bar([
-            [0,0,0,1],
-            [0,0,0,1],
-            [0,0,0,1],
-            [0,0,0,1]
-        ]);
-
-        //getNoteFromBar();
-        //transformation.addAccent(bar, 5, false);
-
-        console.log(bar.toString());
-
-        transformation.addAccentFromMask(bar, mask);
-        console.log(bar.toString());
-
-        //conversion();
-        ostinatiList();
-    }
-
-    function conversion() {
-        // Launch tests
-        var barBinary = [
-            [1,0,0,1],
-            [1,0,0,1],
-            [1,0,0,1],
-            [1,0,0,1],
-        ];
         drumBlock.drawBar(barBinary);
 
 
         var ternaryBar = transformation.convertBarFlow(
             barBinary,
             self.config.flow.sixteenth,
-            self.config.flow.sextuplet,
+            self.config.flow.triplet,
             transformation.config.fillGapMode.empty);
         drumBlock.drawBar(ternaryBar, 0, 75);
     };
@@ -107,6 +89,35 @@ var app = app || {};
         console.log(bar);
 
         console.log("============ end of GET NOTE FROM BAR ============");
+    }
+
+    function addAccent() {
+        var bar = new Bar([
+            [0,1,2,3],
+            [1,0,0,1],
+            [1,0,0,1],
+            [8,9,10,11]
+        ]);
+        var mask = new Bar([
+            [0,0,0,1],
+            [0,0,0,1],
+            [0,0,0,1],
+            [0,0,0,1]
+        ]);
+
+        console.log("==================================");
+
+        console.log("Intial values :");
+        console.log(bar.toString("bar"));
+        console.log(mask.toString("mask"));
+
+        transformation.addAccent(bar, 5, false);
+        console.log(bar.toString("bar (after accent on 5)"));
+
+        transformation.addAccentFromMask(bar, mask);
+        console.log(bar.toString("bar (after accent on mask [ghost=true])"));
+
+        console.log("==================================");
     }
 
 })(app);
