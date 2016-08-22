@@ -84,17 +84,22 @@ var transformation = transformation || {};
 
 
     /*
-        Ajout d'un accent sur la Nième croche
+        Ajout d'un accent sur la Nième croche,
+        le reste est rendu ghost si ghost=true
      */
-    self.addAccent = function(bar, index) {
-        return bar.setNoteByIndex(app.config.note.ACCENT, index);
+    self.addAccent = function(bar, index, ghost = false) {
+
+        if (ghost == true) {
+            var playedNotes = bar.GetPlayedNotes();
+            _.forEach(playedNotes, function (coord) {
+                bar.setNote(coord, app.config.note.GHOST);
+            });
+        }
+
+        var barToReturn = bar.setNoteByIndex(app.config.note.ACCENT, index)
+
+        return barToReturn;
     };
 
-    /*
-        Ajout d'un accent sur la Nième croche
-    */
-    self.addAccent = function(bar, index) {
-        return bar.setNoteByIndex(app.config.note.ACCENT, index);
-    };
 
 })(transformation);

@@ -42,7 +42,7 @@ var app = app || {};
         ]);
 
         //getNoteFromBar();
-        transformation.addAccent(bar, 5);
+        transformation.addAccent(bar, 5, true);
         console.log('bar', bar);
 
         //conversion();
