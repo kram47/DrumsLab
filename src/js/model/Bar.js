@@ -20,6 +20,32 @@
     this.length = length;
 }
 
+
+/*
+    Log bar a pretty way
+*/
+Bar.prototype.toString = function () {
+
+    var output = "";
+    output += "-------------------------\n";
+
+    for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
+
+        var beatLength = this.arrays[beat_i].length;
+        output += "[";
+        for (var note_i = 0 ; note_i < beatLength ; note_i++) {
+            if (note_i > 0)
+                output += ", ";
+            output += this.arrays[beat_i][note_i];
+        }
+        output += "]\n";
+    }
+
+    output += "-------------------------\n";
+
+    return output;
+};
+
 /*
     Set the value at {beat,note} coordinates in the bar
 */
@@ -44,7 +70,6 @@ Bar.prototype.getNote = function (index) {
 
     return this.arrays[coordinates.beat][coordinates.note];
 };
-
 
 /*
     Get the note at i position in the bar
@@ -95,7 +120,7 @@ Bar.prototype.convertIndex2Coordinates = function (index) {
 /*
     Get all played notes
 */
-Bar.prototype.GetPlayedNotes = function () {
+Bar.prototype.getPlayedNotes = function () {
     var noteList = [];
 
     for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {

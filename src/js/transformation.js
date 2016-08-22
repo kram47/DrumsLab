@@ -87,10 +87,10 @@ var transformation = transformation || {};
         Ajout d'un accent sur la Nième croche,
         le reste est rendu ghost si ghost=true
      */
-    self.addAccent = function(bar, index, ghost = false) {
+    self.addAccent = function(bar, index, ghost = true) {
 
         if (ghost == true) {
-            var playedNotes = bar.GetPlayedNotes();
+            var playedNotes = bar.getPlayedNotes();
             _.forEach(playedNotes, function (coord) {
                 bar.setNote(coord, app.config.note.GHOST);
             });
@@ -99,6 +99,34 @@ var transformation = transformation || {};
         var barToReturn = bar.setNoteByIndex(app.config.note.ACCENT, index)
 
         return barToReturn;
+    };
+
+    /*
+        Ajout d'un accent sur les notes de la mesure "masque"
+        le reste est rendu ghost si ghost=true
+     */
+    self.addAccentFromMask = function(bar, mask, ghost = true) {
+
+        // La taille de la mesure et du masque doivent être identique
+        if (bar.numberOfbeat != mask.numberOfbeat) {
+            throw new TypeError("The bar and mask are not consistent.");
+        }
+
+        // On rend ghost toutes les notes jouées de la mesure
+        if (ghost == true) {
+            var playedNotes = bar.getPlayedNotes();
+            _.forEach(playedNotes, function (coord) {
+                bar.setNote(coord, app.config.note.GHOST);
+            });
+        }
+
+        // On accentue toutes les notes jouées du masque
+        var playedMask = mask.getPlayedNotes();
+        _.forEach(playedMask, function (coord) {
+            bar.setNote(coord, app.config.note.ACCENT);
+        });
+
+        return bar;
     };
 
 

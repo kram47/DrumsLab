@@ -40,10 +40,20 @@ var app = app || {};
             [1,0,0,1],
             [8,9,10,11]
         ]);
+        var mask = new Bar([
+            [0,0,0,1],
+            [0,0,0,1],
+            [0,0,0,1],
+            [0,0,0,1]
+        ]);
 
         //getNoteFromBar();
-        transformation.addAccent(bar, 5, true);
-        console.log('bar', bar);
+        //transformation.addAccent(bar, 5, false);
+
+        console.log(bar.toString());
+
+        transformation.addAccentFromMask(bar, mask);
+        console.log(bar.toString());
 
         //conversion();
         ostinatiList();
