@@ -21,34 +21,35 @@
 
     // Setup the notes_array
     var notes = [
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "4" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
-    ];
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "4"],
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "16"],
+      ["c/5", "8"],
+      ["c/5", "8"],
+      ["c/5", "8"]
+    ].map(function(noteStruct){
+      return new Vex.Flow.StaveNote({
+        keys: [noteStruct[0]],
+        duration: noteStruct[1]
+      });
+    });
 
     // Setup the beams: we do this before defining tuplets so that default bracketing will work.
     var beams = [
-      new Vex.Flow.Beam(notes.slice(0, 4)),
-      new Vex.Flow.Beam(notes.slice(5, 10)),
-      new Vex.Flow.Beam(notes.slice(11, 14))
-    ];
+      [0, 4],
+      [5, 9],
+      [9, 12]
+    ].map(function(i){
+      return new Vex.Flow.Beam(notes.slice(i[0], i[1]));
+    });
 
-    var complexQuintuplet = new Vex.Flow.Tuplet(notes.slice(5,10), {
-      num_notes: 5, notes_occupied: 3
-    })
-
-    var simpleTriplet = new Vex.Flow.Tuplet(notes.slice(11,14));
+    var simpleTriplet = new Vex.Flow.Tuplet(notes.slice(9,12));
 
     // Create the voice:
     var voice = new Vex.Flow.Voice({num_beats:4, resolution:Vex.Flow.RESOLUTION})
@@ -67,7 +68,8 @@
     });
 
     // Draw the tuplets:
-    [ complexQuintuplet, simpleTriplet ]
+    [  simpleTriplet ]
     .forEach(function(tuplet){
       tuplet.setContext(context).draw();
     });
+
