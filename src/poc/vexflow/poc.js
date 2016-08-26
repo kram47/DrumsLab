@@ -28,15 +28,11 @@
       new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
       new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
       new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
-      new VF.StaveNote({ keys: ["c/5"], duration: "16" })
-    ];
-
-    var notes2 = [
+      new VF.StaveNote({ keys: ["c/5"], duration: "16" }),
       new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
       new VF.StaveNote({ keys: ["c/5"], duration: "8" }),
       new VF.StaveNote({ keys: ["c/5"], duration: "8" })
     ];
-
 
 
     var beams = VF.Beam.generateBeams(notes, {
@@ -44,15 +40,27 @@
     });
 
     // Now create the tuplets:
-    var triplet = new Vex.Flow.Tuplet(notes2, {
-      num_notes: 3, notes_occupied: 2
-    });
+    var triplet = new Vex.Flow.Tuplet(notes.splice(8,11));
     Vex.Flow.Formatter.FormatAndDraw(context, stave, notes);
-    beams.forEach(function(b) {b.setContext(context).draw()})
 
-    triplet.setContext(ctx).draw();
+    // Create the voice:
+    var voice = new Vex.Flow.Voice({num_beats:4, resolution:4})
+    voice.addTickables(notes);
 
-    var ties = [
+    // Format the voice:
+    var formatter = new Vex.Flow.Formatter();
+    formatter.format([voice], 400);
+
+    // Draw the voice:
+    voice.draw(ctx, stave);
+
+    beams.forEach(function(b) {
+        b.setContext(context).draw()
+    })
+
+    triplet.setContext(context).draw();
+
+    /*var ties = [
       new VF.StaveTie({
         first_note: notes2[1],
         last_note: notes3[0],
@@ -60,5 +68,5 @@
         last_indices: [0]
       })
     ];
-    ties.forEach(function(t) {t.setContext(context).draw()})
+    ties.forEach(function(t) {t.setContext(context).draw()})*/
 
