@@ -1,7 +1,7 @@
 /**
  *
  * @file
- *     transformation.js
+ *     Transformation.js
  * @description
  *     Transformations for music datas
  * @author
@@ -9,25 +9,51 @@
  *
  */
 
-var transformation = transformation || {};
+var Transformation = (function () {
 
-(function (self) {
+   "use strict";
 
-    "use strict";
-    var _name_ = "Transformation";
+    // -- -- M O D U L E   S E T T I N G S -- --
+
+    // Module Configuration
+    var config = {
+        fillGapMode : {
+            "empty" : 0,
+            "circle" : 1,
+            "random" : 2
+        }
+    };
+
+    // Module name
+    var _name = "Transformation";
+
+    // Module Method Exposition
+    var transformation = {
+        config : config,
+        init : init,
+        convertBarFlow : convertBarFlow,
+        addAccent : addAccent,
+        addAccentFromMask : addAccentFromMask
+    };
+
+    // -- -- P R I V A T E   P R O P E R T I E S -- --
+
+
+
+    // -- -- P U B L I C   M E T H O D S -- --
 
     /*
         Initialisation du module
      */
-    self.init = function () {
-        console.log("["+_name_+"] " + "Initialisation");
+    function init() {
+        console.log("["+_name+"] " + "Initialisation");
     };
 
     /*
         Conversion de débit d'une mesure.
         La mesure passe d'un débit A à un débit B, les notes restent les mêmes
      */
-    self.convertBarFlow = function(bar, oldFlow, newFlow, fillGapMode) {
+    function convertBarFlow(bar, oldFlow, newFlow, fillGapMode) {
         var outputBar = [];
         var newBeat = [];
         var beatsNumber = bar.numberOfbeat;
@@ -53,11 +79,11 @@ var transformation = transformation || {};
             else {
 
                 switch(fillGapMode) {
-                    case self.config.fillGapMode.empty:
+                    case config.fillGapMode.empty:
                         console.log("je suis en mode empty");
                         newBeat.push(0);
                         break;
-                    case self.config.fillGapMode.circle:
+                    case config.fillGapMode.circle:
                         console.log("je suis en mode circle");
                         i_beat = Math.floor((i - oldFlow * beatsNumber) / 4);
                         i_croche = (i - oldFlow * beatsNumber) % 4;
@@ -66,7 +92,7 @@ var transformation = transformation || {};
                             note : i_croche
                         }));
                         break;
-                    case self.config.fillGapMode.random:
+                    case config.fillGapMode.random:
                         console.log("je suis en mode random");
                         newBeat.push(_.random(0, 4));
                         break;
@@ -94,7 +120,7 @@ var transformation = transformation || {};
         Ajout d'un accent sur la Nième croche,
         le reste est rendu ghost si ghost=true
      */
-    self.addAccent = function(bar, index, ghost = true) {
+    function addAccent(bar, index, ghost = true) {
 
         if (ghost == true) {
             var playedNotes = bar.getPlayedNotes();
@@ -112,7 +138,7 @@ var transformation = transformation || {};
         Ajout d'un accent sur les notes de la mesure "masque"
         le reste est rendu ghost si ghost=true
      */
-    self.addAccentFromMask = function(bar, mask, ghost = true) {
+    function addAccentFromMask(bar, mask, ghost = true) {
 
         // La taille de la mesure et du masque doivent être identique
         if (bar.numberOfbeat != mask.numberOfbeat) {
@@ -136,5 +162,6 @@ var transformation = transformation || {};
         return bar;
     };
 
+    return transformation;
 
-})(transformation);
+})();

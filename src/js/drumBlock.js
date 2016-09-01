@@ -128,7 +128,7 @@ var DrumBlock = (function() {
     /*
         Dessine un ostinato à partir d'un temps en bloc
      */
-    // TODO : move to transformation
+    // TODO : move to Transformation
     function drawOstinatoBar(ostinato, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
         var bar = [];
@@ -168,7 +168,7 @@ var DrumBlock = (function() {
     /*
         Dessine la liste des otinati
      */
-    // TODO : move to transformation
+    // TODO : move to Transformation
     // juste le placement et titre à gérer
     // Faire quelquechose de dynamique prenant une liste de titre&mesure
     function drawOstinatiList(ostinati, xStart = 0, yStart = 0) {

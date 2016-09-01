@@ -25,7 +25,7 @@ var app = app || {};
 
         // Initialisation of modules
         DrumBlock.init();
-        transformation.init();
+        Transformation.init();
 
         launchTest();
     };
@@ -52,11 +52,11 @@ var app = app || {};
         DrumBlock.drawBar(barBinary);
 
 
-        var ternaryBar = transformation.convertBarFlow(
+        var ternaryBar = Transformation.convertBarFlow(
             barBinary,
             self.config.flow.sixteenth,
             self.config.flow.triplet,
-            transformation.config.fillGapMode.empty);
+            Transformation.config.fillGapMode.empty);
         DrumBlock.drawBar(ternaryBar, 0, 75);
     };
 
@@ -111,10 +111,10 @@ var app = app || {};
         console.log(bar.toString("bar"));
         console.log(mask.toString("mask"));
 
-        transformation.addAccent(bar, 5, false);
+        Transformation.addAccent(bar, 5, false);
         console.log(bar.toString("bar (after accent on 5)"));
 
-        transformation.addAccentFromMask(bar, mask);
+        Transformation.addAccentFromMask(bar, mask);
         console.log(bar.toString("bar (after accent on mask [ghost=true])"));
 
         console.log("==================================");
