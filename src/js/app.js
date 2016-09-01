@@ -24,7 +24,7 @@ var app = app || {};
         console.log("["+_name_+"] " + "Initialisation");
 
         // Initialisation of modules
-        drumBlock.init();
+        DrumBlock.init();
         transformation.init();
 
         launchTest();
@@ -49,7 +49,7 @@ var app = app || {};
             [1,0,0,1],
             [8,9,10,11]
         ]);
-        drumBlock.drawBar(barBinary);
+        DrumBlock.drawBar(barBinary);
 
 
         var ternaryBar = transformation.convertBarFlow(
@@ -57,13 +57,13 @@ var app = app || {};
             self.config.flow.sixteenth,
             self.config.flow.triplet,
             transformation.config.fillGapMode.empty);
-        drumBlock.drawBar(ternaryBar, 0, 75);
+        DrumBlock.drawBar(ternaryBar, 0, 75);
     };
 
     function ostinatiList() {
         $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
             console.log("j'ai récupéré le json !!");
-            drumBlock.drawOstinatiList(ostinati);
+            DrumBlock.drawOstinatiList(ostinati);
         });
     };
 

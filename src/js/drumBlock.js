@@ -9,20 +9,64 @@
  *
  */
 
-var drumBlock = drumBlock || {};
-
-(function(self) {
+var DrumBlock = (function() {
 
     "use strict";
 
-    var _name_ = "DrumBlock";
+    // -- -- M O D U L E   S E T T I N G S -- --
+
+    // Module Configuration
+    var config = {
+        types : [
+            {
+                "name" : "played",
+                "notation" : 1,
+                "color" : "90-#2980b9-#3498db",
+                "class" : "score-played"
+            },
+            {
+                "name" : "ghost",
+                "notation" : 2,
+                "color" : "90-#bdc3c7-#ecf0f1",
+                "class" : "score-ghost"
+            },
+            {
+                "name" : "accent",
+                "notation" : 3,
+                "color" : "90-#c0392b-#e74c3c",
+                "class" : "score-accent"
+            }
+        ]
+    };
+
+    // Module name
+    var _name = "DrumBlock";
+
+    // Module Method Exposition
+    var drumBlock = {
+        config : config,
+        init : init,
+        drawBeat : drawBeat,
+        drawBar : drawBar,
+        drawOstinatoBar : drawOstinatoBar,
+        drawTitle : drawTitle,
+        drawOstinatiList : drawOstinatiList
+    };
+
+
+    // -- -- P R I V A T E   P R O P E R T I E S -- --
+
+    // RaphaelJS main object
     var _paper_;
+
+
+    // -- -- P U B L I C   M E T H O D S -- --
 
     /*
         Initialisation du module
      */
-    self.init = function () {
-        console.log("["+_name_+"] " + "Initialisation");
+    function init () {
+        console.log("["+_name+"] " + "Initialisation");
 
         _paper_ = new Raphael(document.getElementById('canvas_container'), 600, 1200);
     };
@@ -30,14 +74,14 @@ var drumBlock = drumBlock || {};
     /*
         Dessine un temps en blocs
      */
-    self.drawBeat = function(listNotes, xStart, yStart, baseBeatSize, beatSize) {
+    function drawBeat(listNotes, xStart, yStart, baseBeatSize, beatSize) {
         var rectangles = [];
 
         listNotes.forEach(function (current, index, array){
             var rectangle = _paper_.rect(xStart + index * beatSize, yStart, beatSize, baseBeatSize);
             rectangle.node.setAttribute("class","score");
 
-            var currentConfig = $.grep(self.config.types, function (item) { return item.notation == current });
+            var currentConfig = $.grep(config.types, function (item) { return item.notation == current });
 
             if (currentConfig != null && currentConfig.length > 0) {
                 currentConfig = currentConfig[0];
@@ -58,7 +102,7 @@ var drumBlock = drumBlock || {};
     /*
         Dessine une mesure en blocs
      */
-    self.drawBar = function(bar, xStart = 0, yStart = 0) {
+    function drawBar(bar, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
         var jeux = 3; // Jeux de 3px entre les temps de la mesure
         var baseBeatSize = 23; // Une double croche sera un carré de 23px
@@ -75,7 +119,7 @@ var drumBlock = drumBlock || {};
 
                 xPosition += jeux;
                 // Dessin du temps (correspondant à x bloc carrés, x étant le nombre de note du temps)
-                self.drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
+                drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
                 xPosition += beatDivision * beatSize;
                 xPosition += jeux;
         });
@@ -85,7 +129,7 @@ var drumBlock = drumBlock || {};
         Dessine un ostinato à partir d'un temps en bloc
      */
     // TODO : move to transformation
-    self.drawOstinatoBar = function(ostinato, xStart = 0, yStart = 0) {
+    function drawOstinatoBar(ostinato, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
         var bar = [];
 
@@ -102,14 +146,14 @@ var drumBlock = drumBlock || {};
             bar.push(ostinato);
         }
 
-        self.drawBar(bar, xPosition, yPosition);
+        drawBar(bar, xPosition, yPosition);
     };
 
     /*
         Dessine un titre pour le bloc
      */
     // TODO : passer en web simple ??, pas besoin de svg pour un titre
-    self.drawTitle = function(ostinato, xStart = 0, yStart = 0) {
+    function drawTitle(ostinato, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
         var text = _paper_.text(xPosition, yPosition, ostinato);
 
@@ -127,7 +171,7 @@ var drumBlock = drumBlock || {};
     // TODO : move to transformation
     // juste le placement et titre à gérer
     // Faire quelquechose de dynamique prenant une liste de titre&mesure
-    self.drawOstinatiList = function(ostinati, xStart = 0, yStart = 0) {
+    function drawOstinatiList(ostinati, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
 
         for (var i = 0 ; i < ostinati.length ; i++) {
@@ -135,9 +179,12 @@ var drumBlock = drumBlock || {};
             var textXPostion = xPosition + 5, textYPostion = yPosition + (i * 75 + 10);
             var ostinatoXPostion = xPosition, ostinatoYPostion = yPosition + (i * 75 + 25);
 
-            self.drawTitle(ostinatoToDraw.title, textXPostion, textYPostion);
-            self.drawOstinatoBar(ostinatoToDraw.rythmCode, ostinatoXPostion, ostinatoYPostion);
+            drawTitle(ostinatoToDraw.title, textXPostion, textYPostion);
+            drawOstinatoBar(ostinatoToDraw.rythmCode, ostinatoXPostion, ostinatoYPostion);
         }
     };
 
-})(drumBlock);
+
+    return drumBlock;
+
+})();
