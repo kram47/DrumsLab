@@ -112,7 +112,7 @@ var DrumBlock = (function() {
         yPosition += jeux;
 
         // Dessin de chaque temps de la mesure
-        bar.arrays.forEach(function(listNotes) {
+        bar.getArrays().forEach(function(listNotes) {
                 var beatDivision = listNotes.length;
                 // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
                 var beatSize = (barSize - (2 * jeux)) / beatDivision;

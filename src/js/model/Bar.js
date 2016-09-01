@@ -9,133 +9,145 @@
  *
  */
 
- var Bar = function(bar) {
-    this.arrays = bar;
-    this.numberOfbeat = this.arrays.length;
+var Bar = (function() {
 
-    var length = 0
-    this.arrays.forEach(function (beat){
-        length += beat.length;
-    });
-    this.length = length;
-}
+    "use strict";
 
+    var Bar = function(bar) {
+        this.arrays = bar;
+        this.numberOfbeat = this.arrays.length;
 
-/*
-    Log bar a pretty way
-*/
-Bar.prototype.toString = function (name = "{BarName}") {
-
-    var output = "";
-    output += "-------------------------\n";
-    output += "--- " + name + "\n";
-    output += "-------------------------\n";
-
-    for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
-
-        var beatLength = this.arrays[beat_i].length;
-        output += "[";
-        for (var note_i = 0 ; note_i < beatLength ; note_i++) {
-            if (note_i > 0)
-                output += ", ";
-            output += this.arrays[beat_i][note_i];
-        }
-        output += "]\n";
+        var length = 0
+        this.arrays.forEach(function (beat){
+            length += beat.length;
+        });
+        this.length = length;
     }
 
-    output += "-------------------------\n";
+    Bar.prototype.getArrays = function() {
+        return this.arrays;
+    }
 
-    return output;
-};
+    /*
+        Log bar a pretty way
+    */
+    Bar.prototype.toString = function (name = "{BarName}") {
 
-/*
-    Set the value at {beat,note} coordinates in the bar
-*/
-Bar.prototype.setNote = function (coordinates, value = app.config.note.NORMAL) {
+        var output = "";
+        output += "-------------------------\n";
+        output += "--- " + name + "\n";
+        output += "-------------------------\n";
 
-    if (typeof(coordinates.beat) === "undefined" || typeof(coordinates.note) === "undefined")
-        throw new RangeError("Bad Coordinates");
+        for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
 
-    if (coordinates.beat >= this.arrays.length || coordinates.beat < 0)
-        throw new RangeError("Beat greater than bar or less than zero.");
+            var beatLength = this.arrays[beat_i].length;
+            output += "[";
+            for (var note_i = 0 ; note_i < beatLength ; note_i++) {
+                if (note_i > 0)
+                    output += ", ";
+                output += this.arrays[beat_i][note_i];
+            }
+            output += "]\n";
+        }
 
-    this.arrays[coordinates.beat][coordinates.note] = value;
-};
+        output += "-------------------------\n";
 
-/*
-    Get the note at {beat,note} coordinates in the bar
-*/
-Bar.prototype.getNote = function (coordinates) {
+        return output;
+    };
 
-    if (typeof(coordinates.beat) === "undefined" || typeof(coordinates.note) === "undefined")
-        throw new RangeError("Bad Coordinates");
+    /*
+        Set the value at {beat,note} coordinates in the bar
+    */
+    Bar.prototype.setNote = function (coordinates, value = app.config.note.NORMAL) {
 
-    return this.arrays[coordinates.beat][coordinates.note];
-};
+        if (typeof(coordinates.beat) === "undefined" || typeof(coordinates.note) === "undefined")
+            throw new RangeError("Bad Coordinates");
 
-/*
-    Get the note at i position in the bar
-*/
-Bar.prototype.getNoteByIndex = function (index) {
+        if (coordinates.beat >= this.arrays.length || coordinates.beat < 0)
+            throw new RangeError("Beat greater than bar or less than zero.");
 
-    if (index >= this.length || index < 0)
-        throw new RangeError("Index can't be greater to bar's length");
+        this.arrays[coordinates.beat][coordinates.note] = value;
+    };
 
-    var flatBar = _.flatten(this.arrays);
-    return flatBar[index];
-};
+    /*
+        Get the note at {beat,note} coordinates in the bar
+    */
+    Bar.prototype.getNote = function (coordinates) {
 
-/*
-    Set the note at i position in the bar
-*/
-Bar.prototype.setNoteByIndex = function (value, index) {
+        if (typeof(coordinates.beat) === "undefined" || typeof(coordinates.note) === "undefined")
+            throw new RangeError("Bad Coordinates");
 
-    if (index >= this.length || index < 0)
-        throw new RangeError("Index can't be greater to bar's length");
+        return this.arrays[coordinates.beat][coordinates.note];
+    };
 
-    var coordinates = this.convertIndex2Coordinates(index);
-    this.arrays[coordinates.beat][coordinates.note] = value;
-};
+    /*
+        Get the note at i position in the bar
+    */
+    Bar.prototype.getNoteByIndex = function (index) {
 
-/*
-    Convert index number into 2 coordinates to access the 2 dimensional array easily
-*/
-Bar.prototype.convertIndex2Coordinates = function (index) {
+        if (index >= this.length || index < 0)
+            throw new RangeError("Index can't be greater to bar's length");
 
-    if (index >= this.length || index < 0)
-        throw new RangeError("Index can't be greater to bar's length");
+        var flatBar = _.flatten(this.arrays);
+        return flatBar[index];
+    };
 
-    for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
-        var beatLength = this.arrays[beat_i].length;
-        for (var note_i = 0 ; note_i < beatLength ; note_i++) {
-            if (index == 0){
-                return {
-                    "beat" : beat_i,
-                    "note" : note_i
+    /*
+        Set the note at i position in the bar
+    */
+    Bar.prototype.setNoteByIndex = function (value, index) {
+
+        if (index >= this.length || index < 0)
+            throw new RangeError("Index can't be greater to bar's length");
+
+        var coordinates = this.convertIndex2Coordinates(index);
+        this.arrays[coordinates.beat][coordinates.note] = value;
+    };
+
+    /*
+        Convert index number into 2 coordinates to access the 2 dimensional array easily
+    */
+    Bar.prototype.convertIndex2Coordinates = function (index) {
+
+        if (index >= this.length || index < 0)
+            throw new RangeError("Index can't be greater to bar's length");
+
+        for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
+            var beatLength = this.arrays[beat_i].length;
+            for (var note_i = 0 ; note_i < beatLength ; note_i++) {
+                if (index == 0){
+                    return {
+                        "beat" : beat_i,
+                        "note" : note_i
+                    }
+                }
+                index--;
+            }
+        }
+    };
+
+    /*
+        Get all played notes
+    */
+    Bar.prototype.getPlayedNotes = function () {
+        var noteList = [];
+
+        for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
+            var beatLength = this.arrays[beat_i].length;
+            for (var note_i = 0 ; note_i < beatLength ; note_i++) {
+                if (this.arrays[beat_i][note_i] != app.config.note.EMPTY) {
+                    noteList.push({
+                        "beat" : beat_i,
+                        "note" : note_i
+                    });
                 }
             }
-            index--;
         }
-    }
-};
 
-/*
-    Get all played notes
-*/
-Bar.prototype.getPlayedNotes = function () {
-    var noteList = [];
+        return noteList;
+    };
 
-    for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
-        var beatLength = this.arrays[beat_i].length;
-        for (var note_i = 0 ; note_i < beatLength ; note_i++) {
-            if (this.arrays[beat_i][note_i] != app.config.note.EMPTY) {
-                noteList.push({
-                    "beat" : beat_i,
-                    "note" : note_i
-                });
-            }
-        }
-    }
 
-    return noteList;
-};
+    return Bar;
+
+})
