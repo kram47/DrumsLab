@@ -10,6 +10,7 @@
 */
 
 var Bar = function(bar) {
+    var _name = "Bar";
     this.arrays = bar;
     this.numberOfbeat = this.arrays.length;
 
@@ -19,7 +20,17 @@ var Bar = function(bar) {
             length += beat.length;
     });
     this.length = length;
+
+    /*
+        Log d'un message avec le nom du module
+    */
+    this.log = function(message) {
+        console.log("["+_name+"] " + message);
+    };
+
+    this.log("new instance : " + this.arrays);
 }
+
 
 Bar.prototype.getArrays = function() {
     return this.arrays;

@@ -1,7 +1,7 @@
 /**
  *
  * @file
- *     drumBlock.js
+ *     DrumBlock.js
  * @description
  *     Manage the drawing of rythm blocks
  * @author
@@ -59,6 +59,11 @@ var DrumBlock = (function() {
     // RaphaelJS main object
     var _paper_;
 
+    // Log d'un message avec le nom du module
+    function log (message) {
+        console.log("["+_name+"] " + message);
+    };
+
 
     // -- -- P U B L I C   M E T H O D S -- --
 
@@ -66,7 +71,7 @@ var DrumBlock = (function() {
         Initialisation du module
      */
     function init () {
-        console.log("["+_name+"] " + "Initialisation");
+        log("Initialisation");
 
         _paper_ = new Raphael(document.getElementById('canvas_container'), 600, 1200);
     };

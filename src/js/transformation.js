@@ -38,6 +38,11 @@ var Transformation = (function () {
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
 
+    // Log d'un message avec le nom du module
+    function log (message) {
+        console.log("["+_name+"] " + message);
+    };
+
 
 
     // -- -- P U B L I C   M E T H O D S -- --
