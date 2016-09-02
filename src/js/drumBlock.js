@@ -73,7 +73,7 @@ var DrumBlock = (function() {
     function init () {
         log("Initialisation");
 
-        _paper_ = new Raphael(document.getElementById('canvas_container'), 600, 1200);
+        _paper_ = new Raphael(document.getElementById('canvas_container'), 600, 1000);
     };
 
     /*

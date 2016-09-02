@@ -17,26 +17,6 @@ var Score = (function(VF) {
 
         // Module Configuration
         var config = {
-            types : [
-                {
-                    "name" : "played",
-                    "notation" : 1,
-                    "color" : "90-#2980b9-#3498db",
-                    "class" : "score-played"
-                },
-                {
-                    "name" : "ghost",
-                    "notation" : 2,
-                    "color" : "90-#bdc3c7-#ecf0f1",
-                    "class" : "score-ghost"
-                },
-                {
-                    "name" : "accent",
-                    "notation" : 3,
-                    "color" : "90-#c0392b-#e74c3c",
-                    "class" : "score-accent"
-                }
-            ]
         };
 
         // Module name
@@ -67,14 +47,14 @@ var Score = (function(VF) {
         function init () {
             log("Initialisation");
 
-            // Create an SVG renderer and attach it to the DIV element named "vexflow_container".
+/*            // Create an SVG renderer and attach it to the DIV element named "vexflow_container".
             var div = document.getElementById("vexflow_container")
             var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
             // Configure the rendering context.
             renderer.resize(1000, 500);
             var context = renderer.getContext();
-            context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+            context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");*/
         };
 
     return partition;
