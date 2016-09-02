@@ -9,40 +9,33 @@
  *
  */
 
-var Note = (function() {
+var Note = function(settings) {
+    this.settings = settings;
+};
 
-    "use strict";
+/*
+    Log bar a pretty way
+*/
+Note.prototype.toString = function (name = "{BarName}") {
 
-    var Note = function(settings) {
-        this.settings = settings;
+    var output = "";
+    output += "-------------------------\n";
+    output += "--- " + name + "\n";
+    output += "-------------------------\n";
+
+    for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
+
+        var beatLength = this.arrays[beat_i].length;
+        output += "[";
+        for (var note_i = 0 ; note_i < beatLength ; note_i++) {
+            if (note_i > 0)
+                output += ", ";
+            output += this.arrays[beat_i][note_i];
+        }
+        output += "]\n";
     }
 
-    /*
-        Log bar a pretty way
-    */
-    Note.prototype.toString = function (name = "{BarName}") {
+    output += "-------------------------\n";
 
-        var output = "";
-        output += "-------------------------\n";
-        output += "--- " + name + "\n";
-        output += "-------------------------\n";
-
-        for (var beat_i = 0 ; beat_i < this.numberOfbeat ; beat_i++) {
-
-            var beatLength = this.arrays[beat_i].length;
-            output += "[";
-            for (var note_i = 0 ; note_i < beatLength ; note_i++) {
-                if (note_i > 0)
-                    output += ", ";
-                output += this.arrays[beat_i][note_i];
-            }
-            output += "]\n";
-        }
-
-        output += "-------------------------\n";
-
-        return output;
-    };
-
-    return Note;
-})
+    return output;
+};
