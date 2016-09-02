@@ -9,7 +9,7 @@
  *
  */
 
-(function() {
+(function($) {
 
     "use strict";
 
@@ -17,6 +17,8 @@
         app.init();
     };
 
-    init();
+    $('document').ready(function() {
+        init();
+    });
 
-})();
+})(jQuery);
