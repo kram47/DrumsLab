@@ -17,7 +17,12 @@ var DrumBlock = (function() {
 
     // Module Configuration
     var config = {
-        types : [
+        container : {
+            name : 'canvas_container',
+            width : 600,
+            height : 400
+        },
+        noteTypes : [
             {
                 "name" : "played",
                 "notation" : 1,
@@ -73,7 +78,7 @@ var DrumBlock = (function() {
     function init () {
         log("Initialisation");
 
-        _paper_ = new Raphael(document.getElementById('canvas_container'), 600, 1000);
+        _paper_ = new Raphael(document.getElementById(config.container.name), config.container.width, config.container.height);
     };
 
     /*
@@ -86,7 +91,7 @@ var DrumBlock = (function() {
             var rectangle = _paper_.rect(xStart + index * beatSize, yStart, beatSize, baseBeatSize);
             rectangle.node.setAttribute("class","score");
 
-            var currentConfig = $.grep(config.types, function (item) { return item.notation == current });
+            var currentConfig = $.grep(config.noteTypes, function (item) { return item.notation == current });
 
             if (currentConfig != null && currentConfig.length > 0) {
                 currentConfig = currentConfig[0];
