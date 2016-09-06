@@ -30,11 +30,17 @@ var Score = (function(VF) {
         // Module Method Exposition
         var partition = {
             config : config,
-            init : init,
+            init : init
         };
 
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
+
+    // Context Vexlow
+    var _context;
+
+    // Stave Vexlow
+    var _stave;
 
 
     // -- -- P R I V A T E -- --
@@ -47,31 +53,34 @@ var Score = (function(VF) {
         };
 
 
+        ////// C O N T A I N E R
         function initContainer() {
 
-            ////// C O N T A I  N E R
+            // Create an SVG renderer and attach it to the DIV element named "vexflow_container".
+            var div = document.getElementById(config.container.name)
+            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
-                // Create an SVG renderer and attach it to the DIV element named "vexflow_container".
-                var div = document.getElementById(config.container.name)
-                var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+            // Configure the rendering context.
+            renderer.resize(config.container.width, config.container.height);
+            _context = renderer.getContext();
+            _context.setFont("Arial", 10, "").setBackgroundFillStyle("#fac");
+        }
 
-                // Configure the rendering context.
-                renderer.resize(config.container.width, config.container.height);
-                var context = renderer.getContext();
-                context.setFont("Arial", 10, "").setBackgroundFillStyle("#fac");
+        ////// S T A V E
+        function initStave() {
+
+            // Create a stave of width 800 at position 10, 40 on the canvas.
+            _stave = new VF.Stave(10, 40, 800);
+
+            // Add a clef and time signature.
+            _stave.addClef("percussion").addTimeSignature("4/4");
+
+            // Connect it to the rendering context and draw!
+            _stave.setContext(_context).draw();
+        }
 
 
-            ////// S T A V E
-
-                // Create a stave of width 400 at position 10, 40 on the canvas.
-                var stave = new VF.Stave(10, 40, 800);
-
-                // Add a clef and time signature.
-                stave.addClef("percussion").addTimeSignature("4/4");
-
-                // Connect it to the rendering context and draw!
-                stave.setContext(context).draw();
-
+        function addNotes() {
 
             ////// N O T E S
 
@@ -158,17 +167,17 @@ var Score = (function(VF) {
 
 
                 // Draw the voice:
-                voice.draw(context, stave);
+                voice.draw(_context, _stave);
 
                 // Draw the beams:
                 beams.forEach(function(beam){
-                  beam.setContext(context).draw();
+                  beam.setContext(_context).draw();
                 });
 
                 // Draw the tuplets:
                 [  simpleQuintuplet, simpleTriplet , simpleSextuplet ]
                 .forEach(function(tuplet){
-                  tuplet.setContext(context).draw();
+                  tuplet.setContext(_context).draw();
                 });
 
 
@@ -183,6 +192,8 @@ var Score = (function(VF) {
         function init () {
             log("Initialisation");
             initContainer();
+            initStave();
+            addNotes();
         };
 
     return partition;
