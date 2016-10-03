@@ -18,6 +18,7 @@ var Note = function(settings) {
     this.fingering = constants.note.fingering._NORMAL_;
     this.accent = constants.note.accent._NORMAL_;
 
+    // TODO : faire une récupération par attribut pour ajouter des vérifications.
     for(key in settings) {
         if(this.hasOwnProperty(key)) {
             this[key] = options[key];
