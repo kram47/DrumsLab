@@ -96,105 +96,137 @@ var Score = (function(VF) {
             return notes;
         }
 
+        function addBeam(notes, firstNote, lastNote)
+        {
+            return new Vex.Flow.Beam(notes.slice(firstNote, lastNote));
+        }
+
+
+        function createTuplet(notes, first, last, numNotes = 3, numNoteOccupied = 2, ratioed = false) {
+            var tuplet = 
+                new Vex.Flow.Tuplet(notes.slice(first, last), {
+                  num_notes: numNotes, 
+                  notes_occupied: numNoteOccupied, 
+                  ratioed: ratioed,
+                });
+
+            return tuplet;
+        }
+
+
+
+        // Setup the notes array
         function addNotes() {
+         
+            var notes = [];
 
-            ////// N O T E S
+            notes = addBeat(notes, [
+                new Note(),
+                new Note(),
+                new Note(),
+                new Note(),
+                new Note(),
+            ]);
 
-                // Setup the notes_array
-                var notes = [];
-                notes = addBeat(notes, [
-                    new Note(),
-                    new Note(),
-                    new Note(),
-                    new Note(),
-                    new Note(),
-                ]);
+            notes = addBeat(notes, [
+                new Note({tune : "d/4", time : "4"})
+            ]);
 
-                notes = addBeat(notes, [
-                    new Note({tune : "d/4", time : "4"})
-                ]);
+            notes = addBeat(notes, [
+                new Note({tune : "b/4", time : "16"}),
+                new Note({tune : "a/4", time : "16"}),
+                new Note({tune : "c/4", time : "16"}),
+                new Note({tune : "b/4", time : "16"}),
+                new Note({tune : "e/4", time : "16"}),
+                new Note({tune : "e/5", time : "16"}),
+            ]);
 
-                [
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                ].forEach(addNote);
+            notes = addBeat(notes, [
+                new Note({time : "8"}),
+                new Note({time : "8"}),
+                new Note({time : "8"}),
+            ]);
 
-                [
-                    ["c/5", "8"],
-                    ["c/5", "8"],
-                    ["c/5", "8"]
-                ].forEach(addNote);
+            function addNote(noteStructure){
+              notes.push(
+                new Vex.Flow.StaveNote({
+                    keys: [noteStructure[0]],
+                    duration: noteStructure[1]
+                })
+              );
+            }
 
-                function addNote(noteStructure){
-                  notes.push(
-                    new Vex.Flow.StaveNote({
-                        keys: [noteStructure[0]],
-                        duration: noteStructure[1]
-                    })
-                  );
-                }
+            return notes;
+        }
 
-
-            ////// B E A M S
-
-                // Setup the beams: we do this before defining tuplets so that default bracketing will work.
-                var beams = [
+        // Setup the beams: we do this before defining tuplets so that default bracketing will work.
+        function addBeams(notes) {
+            var beams = [
                   [0, 5],
                   [6,12],
                   [12, 15]
                 ].map(function(i){
-                  return new Vex.Flow.Beam(notes.slice(i[0], i[1]));
+                    return addBeam(notes, i[0], i[1]);
                 });
+        
+            return beams;
+        }
+
+        // Setup the tuplets
+        function createTuplets(notes) {
+            var simpleQuintuplet = createTuplet(notes, 0, 5, 5, 4);
+            var simpleSextuplet = createTuplet(notes, 6, 12, 6, 4);
+            var simpleTriplet = createTuplet(notes, 12, 15);
+
+            return [simpleQuintuplet, simpleSextuplet, simpleTriplet];
+        }
+
+        function createVoice(notes)
+        {
+            // Create the voice:
+            var voice = new Vex.Flow.Voice({num_beats:4, resolution:Vex.Flow.RESOLUTION})
+            voice.addTickables(notes);
+
+            // Format the voice:
+            var formatter = new Vex.Flow.Formatter();
+            formatter.format([voice], 775);
+
+            return voice;
+        }
 
 
+        function draw(voice, beams, tuplets)
+        {
+            // Draw the voice
+            voice.draw(_context, _stave);
+
+            // Draw the beams
+            beams.forEach(function(beam){
+              beam.setContext(_context).draw();
+            });
+
+            // Draw the tuplets
+            tuplets.forEach(function(tuplet){
+              tuplet.setContext(_context).draw();
+            });
+        }
+
+        function drawNotes() {
+
+            ////// N O T E S 
+            var notes = addNotes();
+            
+            ////// B E A M S
+            var beams = addBeams(notes);
+            
             ////// T U P L E T S
-
-                // Create the quintuplet
-                var simpleQuintuplet = new Vex.Flow.Tuplet(notes.slice(0,5), {
-                  num_notes: 5, notes_occupied: 4, ratioed: false,
-                });
-
-                // Create the sextuplet
-                var simpleSextuplet = new Vex.Flow.Tuplet(notes.slice(6,12), {
-                  num_notes: 6, notes_occupied: 4, ratioed: false,
-                });
-
-                // Create the triplet
-                var simpleTriplet = new Vex.Flow.Tuplet(notes.slice(12,15));
-
+            var tuplets = createTuplets(notes);
 
             ////// V O I C E
-
-                // Create the voice:
-                var voice = new Vex.Flow.Voice({num_beats:4, resolution:Vex.Flow.RESOLUTION})
-                voice.addTickables(notes);
-
-                // Format the voice:
-                var formatter = new Vex.Flow.Formatter();
-                formatter.format([voice], 775);
-
+            var voice = createVoice(notes);
 
             ////// D R A W
-
-
-                // Draw the voice:
-                voice.draw(_context, _stave);
-
-                // Draw the beams:
-                beams.forEach(function(beam){
-                  beam.setContext(_context).draw();
-                });
-
-                // Draw the tuplets:
-                [  simpleQuintuplet, simpleTriplet , simpleSextuplet ]
-                .forEach(function(tuplet){
-                  tuplet.setContext(_context).draw();
-                });
-
+            draw(voice, beams, tuplets);
 
         }
 
@@ -208,7 +240,7 @@ var Score = (function(VF) {
             log("Initialisation");
             initContainer();
             initStave();
-            addNotes();
+            drawNotes();
         };
 
     return partition;
