@@ -25,7 +25,7 @@ var Score = (function(VF) {
         };
 
         // Module name
-        var _name = "Score";
+        var _name = "Score"; 
 
         // Module Method Exposition
         var partition = {
@@ -80,24 +80,39 @@ var Score = (function(VF) {
         }
 
 
+        function addBeat(notes, notesToAdd)
+        {
+            notesToAdd.forEach(addNote);
+
+            function addNote(noteStructure){
+              notes.push(
+                new Vex.Flow.StaveNote({
+                    keys: [noteStructure.tune],
+                    duration: noteStructure.time.toString()
+                })
+              );
+            }
+
+            return notes;
+        }
+
         function addNotes() {
 
             ////// N O T E S
 
                 // Setup the notes_array
                 var notes = [];
+                notes = addBeat(notes, [
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                ]);
 
-                [
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                    ["c/5", "16"],
-                ].forEach(addNote);
-
-                [
-                    ["c/5", "4"],
-                ].forEach(addNote);
+                notes = addBeat(notes, [
+                    new Note({tune : "d/4", time : "4"})
+                ]);
 
                 [
                     ["c/5", "16"],
@@ -114,11 +129,11 @@ var Score = (function(VF) {
                     ["c/5", "8"]
                 ].forEach(addNote);
 
-                function addNote(noteStruct){
+                function addNote(noteStructure){
                   notes.push(
                     new Vex.Flow.StaveNote({
-                        keys: [noteStruct[0]],
-                        duration: noteStruct[1]
+                        keys: [noteStructure[0]],
+                        duration: noteStructure[1]
                     })
                   );
                 }

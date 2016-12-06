@@ -1,7 +1,11 @@
 #canvas_container {
   width: 600px;
-  height: 400px;
-  /*border: 1px solid #aaa;*/
+  height: 1200px;
+  border: 1px solid #aaa;
+}
+
+#vexflow_container {
+  border: 1px solid #aaa;
 }
 
 .score {

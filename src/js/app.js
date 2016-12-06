@@ -105,8 +105,8 @@ var app = (function (self){
 
             //addAccent();
             //getNoteFromBar();
-            conversion();
-            //ostinatiList();
+            //conversion();
+            ostinatiList();
         }
 
         function conversion() {
@@ -151,7 +151,7 @@ var app = (function (self){
             console.log("------ Elements ------");
             for (var i = 0; i < 16; i++) {
                 console.log("bar["+i+"] = " + bar.getNoteByIndex(i));
-                console.log(bar.convertIndexIntoCoordinates(i));
+                console.log(bar.convertIndex2Coordinates(i));
                 bar.setNoteByIndex(12, i);
             }
             console.log(bar);
@@ -180,7 +180,7 @@ var app = (function (self){
             console.log(mask.toString("mask"));
 
             Transformation.addAccent(bar, 5, false);
-            console.log(bar.toString("bar (after accent on 5)"));
+            console.log(bar.toString("bar (after accent on 5 [ghost=false])"));
 
             Transformation.addAccentFromMask(bar, mask);
             console.log(bar.toString("bar (after accent on mask [ghost=true])"));

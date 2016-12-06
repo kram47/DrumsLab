@@ -20,7 +20,7 @@ var DrumBlock = (function() {
         container : {
             name : 'canvas_container',
             width : 600,
-            height : 400
+            height : 1200
         },
         noteTypes : [
             {
@@ -156,7 +156,8 @@ var DrumBlock = (function() {
             bar.push(ostinato);
         }
 
-        drawBar(bar, xPosition, yPosition);
+        var barToSend = new Bar(bar);
+        drawBar(barToSend, xPosition, yPosition);
     };
 
     /*
