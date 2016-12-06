@@ -20,7 +20,7 @@ var Score = (function(VF) {
             container : {
                 name : 'vexflow_container',
                 width : 1000,
-                height : 500
+                height : 1200
             }
         };
 
@@ -33,7 +33,6 @@ var Score = (function(VF) {
             init : init
         };
 
-
     // -- -- P R I V A T E   P R O P E R T I E S -- --
 
     // Context Vexlow
@@ -41,6 +40,19 @@ var Score = (function(VF) {
 
     // Stave Vexlow
     var _stave;
+
+
+    // -- -- P U B L I C   M E T H O D S -- --
+
+        /*
+            Initialisation du module
+         */
+        function init () {
+            log("Initialisation");
+            initContainer();
+            initStave(10, 40);
+            example();
+        };
 
 
     // -- -- P R I V A T E -- --
@@ -51,7 +63,6 @@ var Score = (function(VF) {
         function log (message) {
             console.log("["+_name+"] " + message);
         };
-
 
         ////// C O N T A I N E R
         function initContainer() {
@@ -67,10 +78,10 @@ var Score = (function(VF) {
         }
 
         ////// S T A V E
-        function initStave() {
+        function initStave(x, y) {
 
             // Create a stave of width 800 at position 10, 40 on the canvas.
-            _stave = new VF.Stave(10, 40, 800);
+            _stave = new VF.Stave(x, y, 800);
 
             // Add a clef and time signature.
             _stave.addClef("percussion").addTimeSignature("4/4");
@@ -79,9 +90,7 @@ var Score = (function(VF) {
             _stave.setContext(_context).draw();
         }
 
-
-        function addBeat(notes, notesToAdd)
-        {
+        function addBeat(notes, notesToAdd) {
             notesToAdd.forEach(addNote);
 
             function addNote(noteStructure){
@@ -96,11 +105,10 @@ var Score = (function(VF) {
             return notes;
         }
 
-        function addBeam(notes, firstNote, lastNote)
-        {
+        function addBeam(notes, firstNote, lastNote) {
+
             return new Vex.Flow.Beam(notes.slice(firstNote, lastNote));
         }
-
 
         function createTuplet(notes, first, last, numNotes = 3, numNoteOccupied = 2, ratioed = false) {
             var tuplet = 
@@ -113,76 +121,7 @@ var Score = (function(VF) {
             return tuplet;
         }
 
-
-
-        // Setup the notes array
-        function addNotes() {
-         
-            var notes = [];
-
-            notes = addBeat(notes, [
-                new Note(),
-                new Note(),
-                new Note(),
-                new Note(),
-                new Note(),
-            ]);
-
-            notes = addBeat(notes, [
-                new Note({tune : "d/4", time : "4"})
-            ]);
-
-            notes = addBeat(notes, [
-                new Note({tune : "b/4", time : "16"}),
-                new Note({tune : "a/4", time : "16"}),
-                new Note({tune : "c/4", time : "16"}),
-                new Note({tune : "b/4", time : "16"}),
-                new Note({tune : "e/4", time : "16"}),
-                new Note({tune : "e/5", time : "16"}),
-            ]);
-
-            notes = addBeat(notes, [
-                new Note({time : "8"}),
-                new Note({time : "8"}),
-                new Note({time : "8"}),
-            ]);
-
-            function addNote(noteStructure){
-              notes.push(
-                new Vex.Flow.StaveNote({
-                    keys: [noteStructure[0]],
-                    duration: noteStructure[1]
-                })
-              );
-            }
-
-            return notes;
-        }
-
-        // Setup the beams: we do this before defining tuplets so that default bracketing will work.
-        function addBeams(notes) {
-            var beams = [
-                  [0, 5],
-                  [6,12],
-                  [12, 15]
-                ].map(function(i){
-                    return addBeam(notes, i[0], i[1]);
-                });
-        
-            return beams;
-        }
-
-        // Setup the tuplets
-        function createTuplets(notes) {
-            var simpleQuintuplet = createTuplet(notes, 0, 5, 5, 4);
-            var simpleSextuplet = createTuplet(notes, 6, 12, 6, 4);
-            var simpleTriplet = createTuplet(notes, 12, 15);
-
-            return [simpleQuintuplet, simpleSextuplet, simpleTriplet];
-        }
-
-        function createVoice(notes)
-        {
+        function createVoice(notes) {
             // Create the voice:
             var voice = new Vex.Flow.Voice({num_beats:4, resolution:Vex.Flow.RESOLUTION})
             voice.addTickables(notes);
@@ -194,9 +133,7 @@ var Score = (function(VF) {
             return voice;
         }
 
-
-        function draw(voice, beams, tuplets)
-        {
+        function draw(voice, beams, tuplets) {
             // Draw the voice
             voice.draw(_context, _stave);
 
@@ -211,7 +148,72 @@ var Score = (function(VF) {
             });
         }
 
-        function drawNotes() {
+        function example() {
+            // Setup the notes array
+            function addNotes() {
+             
+                var notes = [];
+
+                notes = addBeat(notes, [
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                    new Note(),
+                ]);
+
+                notes = addBeat(notes, [
+                    new Note({tune : "d/4", time : "4"})
+                ]);
+
+                notes = addBeat(notes, [
+                    new Note({tune : "b/4", time : "16"}),
+                    new Note({tune : "a/4", time : "16"}),
+                    new Note({tune : "c/4", time : "16"}),
+                    new Note({tune : "b/4", time : "16"}),
+                    new Note({tune : "e/4", time : "16"}),
+                    new Note({tune : "e/5", time : "16"}),
+                ]);
+
+                notes = addBeat(notes, [
+                    new Note({time : "8"}),
+                    new Note({time : "8"}),
+                    new Note({time : "8"}),
+                ]);
+
+                function addNote(noteStructure){
+                  notes.push(
+                    new Vex.Flow.StaveNote({
+                        keys: [noteStructure[0]],
+                        duration: noteStructure[1]
+                    })
+                  );
+                }
+
+                return notes;
+            }
+
+            // Setup the beams: we do this before defining tuplets so that default bracketing will work.
+            function addBeams(notes) {
+                var beams = [
+                      [0, 5],
+                      [6,12],
+                      [12, 15]
+                    ].map(function(i){
+                        return addBeam(notes, i[0], i[1]);
+                    });
+            
+                return beams;
+            }
+
+            // Setup the tuplets
+            function createTuplets(notes) {
+                var simpleQuintuplet = createTuplet(notes, 0, 5, 5, 4);
+                var simpleSextuplet = createTuplet(notes, 6, 12, 6, 4);
+                var simpleTriplet = createTuplet(notes, 12, 15);
+
+                return [simpleQuintuplet, simpleSextuplet, simpleTriplet];
+            }
 
             ////// N O T E S 
             var notes = addNotes();
@@ -227,21 +229,29 @@ var Score = (function(VF) {
 
             ////// D R A W
             draw(voice, beams, tuplets);
+        }
 
+        function createScoreFromNotes(notes) {
+            // Parameter : [[Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note]]
+            // Result : Drawn Score (voice)
+
+            notes.forEach(function(beatNotes){
+
+                ////// B E A M S
+                var beams = addBeams(beatNotes);
+                
+                ////// T U P L E T S
+                var tuplets = createTuplets(beatNotes);
+
+                ////// V O I C E
+                var voice = createVoice(beatNotes);
+
+                ////// D R A W
+                draw(voice, beams, tuplets);
+            });
         }
 
 
-    // -- -- P U B L I C   M E T H O D S -- --
-
-        /*
-            Initialisation du module
-         */
-        function init () {
-            log("Initialisation");
-            initContainer();
-            initStave();
-            drawNotes();
-        };
 
     return partition;
 
