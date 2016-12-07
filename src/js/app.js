@@ -190,14 +190,72 @@ var app = (function (self){
         }
 
         function vexFlow() {
-            var notes = [
+            
+
+            function drawOstinato(currentOstinato, x, y)
+            {
+                var notes = [];
+
+                var noteTimes = [16, 8, 8, 4];
+
+                for (var i = 0 ; i < 4 ; i++) {
+
+                    var noteCreation = false;
+                    var beatNotes = [];
+                    var currentNoteTimeIndex = 0;
+
+                    for (var note = 0 ; note < 4 ; note++) {
+
+                        if (currentOstinato.rythmCode[note] == 1)
+                            noteCreation = true;
+
+                        // Si la note actuelle est la dernière note ou si la note d'après est jouée ou si nous sommes en mode de création de note
+                        // Alors on pousse la note
+                        if (noteCreation && (note == currentOstinato.rythmCode.length - 1 || currentOstinato.rythmCode[note + 1] == 1))
+                        {
+                            beatNotes.push(new Note({time : noteTimes[currentNoteTimeIndex].toString()}));
+                            currentNoteTimeIndex = 0;
+                            noteCreation = false;
+                        }
+                        else
+                        {
+                            if (noteCreation)
+                                currentNoteTimeIndex += 1;
+                        }
+                    }
+
+                    notes.push(beatNotes);
+                }
+
+                ScoreManager.initVoice(notes, x, y);
+            }
+
+
+            $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
+                console.log("j'ai récupéré le json !! oui oui une deuxieme fois... Bon ben ça va on peut pas tout optimiser du premier coup !! ");
+
+                /*
+                ostinatoToDraw.title
+                ostinatoToDraw.rythmCode
+                */
+
+                ostinati.forEach(function (ostinato, index){
+                    drawOstinato(ostinato, 10, 150 * index + 40);
+                });
+
+
+            });
+
+
+/*
+           var notes2 = [
                 [new Note({time : "8"}), new Note({time : "8"})],
-                [new Note({time : "8"}),new Note({time : "8"}),new Note({time : "8"})],
+                [new Note({time : "8"}),new Note({time : "8"})],
                 [new Note(),new Note(),new Note(),new Note()],
                 [new Note(),new Note(),new Note(),new Note()],
             ];
 
-            ScoreManager.createScoreFromNotes(notes);
+            ScoreManager.initVoice(notes2, 10, 200);*/
         }
 
     return app;

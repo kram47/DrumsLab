@@ -31,7 +31,7 @@ var ScoreManager = (function(VF) {
         var scoreManager = {
             config : config,
             init : init,
-            createScoreFromNotes : createScoreFromNotes,
+            initVoice : initVoice,
         };
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
@@ -51,10 +51,16 @@ var ScoreManager = (function(VF) {
         function init () {
             log("Initialisation");
             initContainer();
-            initStave(10, 40);
+            // initStave(10, 40);
             // example();
         };
 
+
+
+        function initVoice(notes, x, y) {
+            initStave(x, y);
+            createScoreFromNotes(notes);
+        }
 
         function createScoreFromNotes(notes) {
             // Parameter : [[Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note]]
@@ -79,6 +85,7 @@ var ScoreManager = (function(VF) {
                     beams.push(addBeam(vexNotes, newBeatStartIndex, newBeatEndIndex));  // [---- ----] + [----]
                 }
                 
+/*              ////// T U P L E T S
                 var shouldBeNotesNumber;
                 if (beatNotesSize == 3) {
                     shouldBeNotesNumber = 2;
@@ -87,10 +94,9 @@ var ScoreManager = (function(VF) {
                     shouldBeNotesNumber = 4;
                 }
                 
-                ////// T U P L E T S
                 if (typeof(shouldBeNotesNumber) != "undefined") {
                     tuplets.push(createTuplet(vexNotes, newBeatStartIndex, newBeatEndIndex, beatNotesSize, shouldBeNotesNumber));
-                }
+                }*/
 
             });
 
@@ -140,7 +146,7 @@ var ScoreManager = (function(VF) {
         function createVexNotes(notesToConvert) {
             var vexNotes = []
             
-            notesToConvert.forEach( function(noteStructure) {
+            notesToConvert.forEach(function(noteStructure) {
                 
                 vexNotes.push(
                     new Vex.Flow.StaveNote({
