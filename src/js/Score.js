@@ -20,7 +20,7 @@ var ScoreManager = (function(VF) {
             container : {
                 name : 'vexflow_container',
                 width : 1000,
-                height : 1200
+                height : 2000
             }
         };
 

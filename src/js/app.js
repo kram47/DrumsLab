@@ -190,72 +190,146 @@ var app = (function (self){
         }
 
         function vexFlow() {
-            
 
-            function drawOstinato(currentOstinato, x, y)
-            {
-                var notes = [];
+            var ostinato0 = [
+                [new Note({time : "4"})],
+                [new Note({time : "4"})],
+                [new Note({time : "4"})],
+                [new Note({time : "4"})],
+            ];
 
-                var noteTimes = [16, 8, 8, 4];
+            var ostinato1 = [
+                [new Note({time : "8"}), new Note({time : "8"})],
+                [new Note({time : "8"}), new Note({time : "8"})],
+                [new Note({time : "8"}), new Note({time : "8"})],
+                [new Note({time : "8"}), new Note({time : "8"})],
+            ];
 
-                for (var i = 0 ; i < 4 ; i++) {
+            var ostinato2 = [
+                [new Note({time : "8r"}), new Note({time : "8"})],
+                [new Note({time : "8r"}), new Note({time : "8"})],
+                [new Note({time : "8r"}), new Note({time : "8"})],
+                [new Note({time : "8r"}), new Note({time : "8"})],
+            ];
 
-                    var noteCreation = false;
-                    var beatNotes = [];
-                    var currentNoteTimeIndex = 0;
+            var ostinato3 = [
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+            ];
 
-                    for (var note = 0 ; note < 4 ; note++) {
+            var ostinato4 = [
+                [new Note({time : "8"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8"}), new Note({time : "16"}), new Note({time : "16"})],
+            ];
 
-                        if (currentOstinato.rythmCode[note] == 1)
-                            noteCreation = true;
+            var ostinato5 = [
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8"})],
+            ];
 
-                        // Si la note actuelle est la dernière note ou si la note d'après est jouée ou si nous sommes en mode de création de note
-                        // Alors on pousse la note
-                        if (noteCreation && (note == currentOstinato.rythmCode.length - 1 || currentOstinato.rythmCode[note + 1] == 1))
-                        {
-                            beatNotes.push(new Note({time : noteTimes[currentNoteTimeIndex].toString()}));
-                            currentNoteTimeIndex = 0;
-                            noteCreation = false;
-                        }
-                        else
-                        {
-                            if (noteCreation)
-                                currentNoteTimeIndex += 1;
-                        }
-                    }
+            var ostinato6 = [
+                [new Note({time : "16"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16"}), new Note({time : "8"}), new Note({time : "16"})],
+            ];
 
-                    notes.push(beatNotes);
-                }
+            var ostinato7 = [
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})],
+            ];
 
-                ScoreManager.initVoice(notes, x, y);
-            }
+            var ostinato8 = [
+                [new Note({time : "8r"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8r"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8r"}), new Note({time : "16"}), new Note({time : "16"})],
+                [new Note({time : "8r"}), new Note({time : "16"}), new Note({time : "16"})],
+            ];
+
+            var ostinato9 = [
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8r"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8r"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8r"})],
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "8r"})],
+            ];
+
+            var ostinato10 = [
+                [new Note({time : "8d"}), new Note({time : "16"})],
+                [new Note({time : "8d"}), new Note({time : "16"})],
+                [new Note({time : "8d"}), new Note({time : "16"})],
+                [new Note({time : "8d"}), new Note({time : "16"})],
+            ];
+
+            var ostinato11 = [
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "8"})],
+                [new Note({time : "16r"}), new Note({time : "16"}), new Note({time : "8"})],
+            ];
+
+            var ostinato12 = [
+                [new Note({time : "16r"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "8"}), new Note({time : "16"})],
+                [new Note({time : "16r"}), new Note({time : "8"}), new Note({time : "16"})],
+            ];
+
+            var ostinato13 = [
+                [new Note({time : "16r"}), new Note({time : "8d"})],
+                [new Note({time : "16r"}), new Note({time : "8d"})],
+                [new Note({time : "16r"}), new Note({time : "8d"})],
+                [new Note({time : "16r"}), new Note({time : "8d"})],
+            ];
+
+            var ostinato14 = [
+                [new Note({time : "8dr"}), new Note({time : "16"})],
+                [new Note({time : "8dr"}), new Note({time : "16"})],
+                [new Note({time : "8dr"}), new Note({time : "16"})],
+                [new Note({time : "8dr"}), new Note({time : "16"})],
+            ];
+
+            var ostinato15 = [
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
+            ];
+
+/*
+            var ostinato15 = [
+                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
+            ];
+
+*/
 
 
-            $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
-                console.log("j'ai récupéré le json !! oui oui une deuxieme fois... Bon ben ça va on peut pas tout optimiser du premier coup !! ");
+            [
+                ostinato0,
+                ostinato1,
+                ostinato2,
+                ostinato3,
+                ostinato4,
+                ostinato5,
+                ostinato6,
+                ostinato7,
+                ostinato8,
+                ostinato9,
+                ostinato10,
+                ostinato11,
+                ostinato12,
+                ostinato13,
+                ostinato14
+            ].forEach(function (ostinato, index) {
 
-                /*
-                ostinatoToDraw.title
-                ostinatoToDraw.rythmCode
-                */
-
-                ostinati.forEach(function (ostinato, index){
-                    drawOstinato(ostinato, 10, 150 * index + 40);
-                });
-
+                ScoreManager.initVoice(ostinato, 10, 75 * index);
 
             });
 
-
-/*
-           var notes2 = [
-                [new Note({time : "8"}), new Note({time : "8"})],
-                [new Note({time : "8"}),new Note({time : "8"})],
-                [new Note(),new Note(),new Note(),new Note()],
-                [new Note(),new Note(),new Note(),new Note()],
-            ];
-
-            ScoreManager.initVoice(notes2, 10, 200);*/
         }
 
     return app;
