@@ -1,7 +1,7 @@
 /**
  *
  * @file
- *     Score.js
+ *     ScoreManager.js
  * @description
  *     Manage the drawing of partitions staves
  * @author
@@ -9,7 +9,7 @@
  *
  */
 
-var Score = (function(VF) {
+var ScoreManager = (function(VF) {
 
     "use strict";
 
@@ -25,12 +25,13 @@ var Score = (function(VF) {
         };
 
         // Module name
-        var _name = "Score"; 
+        var _name = "ScoreManager"; 
 
         // Module Method Exposition
-        var partition = {
+        var scoreManager = {
             config : config,
-            init : init
+            init : init,
+            createScoreFromNotes : createScoreFromNotes,
         };
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
@@ -51,8 +52,54 @@ var Score = (function(VF) {
             log("Initialisation");
             initContainer();
             initStave(10, 40);
-            example();
+            // example();
         };
+
+
+        function createScoreFromNotes(notes) {
+            // Parameter : [[Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note]]
+            // Result : Drawn Score (voice)
+
+            var vexNotes = [];
+            var beams = [];
+            var tuplets = [];
+
+            notes.forEach(function(beatNotes){
+
+                var vexNotesSize = vexNotes.length;
+                var beatNotesSize = beatNotes.length;
+                var newBeatStartIndex = vexNotesSize;
+                var newBeatEndIndex = vexNotesSize + beatNotesSize;
+
+                ////// N O T E S
+                vexNotes = _.concat(vexNotes, createVexNotes(beatNotes));
+
+                ////// B E A M S
+                if (beatNotesSize >= 2) {
+                    beams.push(addBeam(vexNotes, newBeatStartIndex, newBeatEndIndex));  // [---- ----] + [----]
+                }
+                
+                var shouldBeNotesNumber;
+                if (beatNotesSize == 3) {
+                    shouldBeNotesNumber = 2;
+                }
+                else if (beatNotesSize == 6) {
+                    shouldBeNotesNumber = 4;
+                }
+                
+                ////// T U P L E T S
+                if (typeof(shouldBeNotesNumber) != "undefined") {
+                    tuplets.push(createTuplet(vexNotes, newBeatStartIndex, newBeatEndIndex, beatNotesSize, shouldBeNotesNumber));
+                }
+
+            });
+
+            ////// V O I C E
+            var voice = createVoice(vexNotes);
+
+            ////// D R A W
+            draw(voice, beams, tuplets);
+        }
 
 
     // -- -- P R I V A T E -- --
@@ -90,19 +137,21 @@ var Score = (function(VF) {
             _stave.setContext(_context).draw();
         }
 
-        function addBeat(notes, notesToAdd) {
-            notesToAdd.forEach(addNote);
+        function createVexNotes(notesToConvert) {
+            var vexNotes = []
+            
+            notesToConvert.forEach( function(noteStructure) {
+                
+                vexNotes.push(
+                    new Vex.Flow.StaveNote({
+                        keys: [noteStructure.tune],
+                        duration: noteStructure.time.toString()
+                    })
+                );
 
-            function addNote(noteStructure){
-              notes.push(
-                new Vex.Flow.StaveNote({
-                    keys: [noteStructure.tune],
-                    duration: noteStructure.time.toString()
-                })
-              );
-            }
+            });
 
-            return notes;
+            return vexNotes;
         }
 
         function addBeam(notes, firstNote, lastNote) {
@@ -142,10 +191,12 @@ var Score = (function(VF) {
               beam.setContext(_context).draw();
             });
 
-            // Draw the tuplets
-            tuplets.forEach(function(tuplet){
-              tuplet.setContext(_context).draw();
-            });
+            if (typeof(tuplets) != "undefined" && tuplets.length > 0) {
+                // Draw the tuplets
+                tuplets.forEach(function(tuplet){
+                  tuplet.setContext(_context).draw();
+                });
+            }
         }
 
         function example() {
@@ -154,7 +205,7 @@ var Score = (function(VF) {
              
                 var notes = [];
 
-                notes = addBeat(notes, [
+                notes = createVexNotes([
                     new Note(),
                     new Note(),
                     new Note(),
@@ -162,11 +213,11 @@ var Score = (function(VF) {
                     new Note(),
                 ]);
 
-                notes = addBeat(notes, [
+                notes = createVexNotes([
                     new Note({tune : "d/4", time : "4"})
                 ]);
 
-                notes = addBeat(notes, [
+                notes = createVexNotes([
                     new Note({tune : "b/4", time : "16"}),
                     new Note({tune : "a/4", time : "16"}),
                     new Note({tune : "c/4", time : "16"}),
@@ -175,7 +226,7 @@ var Score = (function(VF) {
                     new Note({tune : "e/5", time : "16"}),
                 ]);
 
-                notes = addBeat(notes, [
+                notes = createVexNotes([
                     new Note({time : "8"}),
                     new Note({time : "8"}),
                     new Note({time : "8"}),
@@ -231,28 +282,10 @@ var Score = (function(VF) {
             draw(voice, beams, tuplets);
         }
 
-        function createScoreFromNotes(notes) {
-            // Parameter : [[Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note], [Note, Note, Note, Note]]
-            // Result : Drawn Score (voice)
-
-            notes.forEach(function(beatNotes){
-
-                ////// B E A M S
-                var beams = addBeams(beatNotes);
-                
-                ////// T U P L E T S
-                var tuplets = createTuplets(beatNotes);
-
-                ////// V O I C E
-                var voice = createVoice(beatNotes);
-
-                ////// D R A W
-                draw(voice, beams, tuplets);
-            });
-        }
+        
 
 
 
-    return partition;
+    return scoreManager;
 
 })(Vex.Flow);

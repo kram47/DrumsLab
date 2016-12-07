@@ -83,7 +83,7 @@ var app = (function (self){
             // Initialisation of modules
             DrumBlock.init();
             Transformation.init();
-            Score.init();
+            ScoreManager.init();
 
             launchTest();
         };
@@ -107,6 +107,7 @@ var app = (function (self){
             //getNoteFromBar();
             //conversion();
             ostinatiList();
+            vexFlow();
         }
 
         function conversion() {
@@ -188,6 +189,16 @@ var app = (function (self){
             console.log("==================================");
         }
 
+        function vexFlow() {
+            var notes = [
+                [new Note({time : "8"}), new Note({time : "8"})],
+                [new Note({time : "8"}),new Note({time : "8"}),new Note({time : "8"})],
+                [new Note(),new Note(),new Note(),new Note()],
+                [new Note(),new Note(),new Note(),new Note()],
+            ];
+
+            ScoreManager.createScoreFromNotes(notes);
+        }
 
     return app;
 
