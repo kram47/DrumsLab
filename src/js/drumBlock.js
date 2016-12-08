@@ -109,6 +109,39 @@ var DrumBlock = (function() {
         });
     };
 
+
+    function calculateBarTime(listNotes) {
+
+        var totalTime = 0.0;
+        
+        listNotes.forEach(function (note) {
+
+            totalTime += (1 / note.time);
+
+        });
+
+        return totalTime;
+    }
+
+    function calculateCrocheNumber(listNotes) {
+
+        // TODO : calculer le débit ternaire ou non car calcul différent.
+        var isTernary = false;
+
+        // Unité de base est la double croche
+        var unitTimeBase = 1/16; 
+
+        var crocheNumber = 0;
+
+        listNotes.forEach(function (note) {
+
+            crocheNumber += ( 1 / note.time ) / unitTimeBase; // => (1/8) / (1/16) == 2
+
+        });
+
+        return crocheNumber;
+    }
+
     /*
         Dessine une mesure en blocs
      */
@@ -123,15 +156,20 @@ var DrumBlock = (function() {
 
         // Dessin de chaque temps de la mesure
         bar.getArrays().forEach(function(listNotes) {
-            var beatDivision = listNotes.length;
-            // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
-            var beatSize = (barSize - (2 * jeux)) / beatDivision;
+            
+            var time = calculateBarTime(listNotes);
+            if (time == 1/4)
+            {
+                var beatDivision = calculateCrocheNumber(listNotes);
+                // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
+                var beatSize = (barSize - (2 * jeux)) / beatDivision;
 
-            xPosition += jeux;
-            // Dessin du temps (correspondant à x bloc carrés, x étant le nombre de note du temps)
-            drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
-            xPosition += beatDivision * beatSize;
-            xPosition += jeux;
+                xPosition += jeux;
+                // Dessin du temps (correspondant à x bloc carrés, x étant le nombre de note du temps)
+                drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
+                xPosition += beatDivision * beatSize;
+                xPosition += jeux;
+            }
         });
     };
 
