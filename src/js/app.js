@@ -84,6 +84,7 @@ var app = (function (self){
             DrumBlock.init();
             Transformation.init();
             ScoreManager.init();
+            FileManager.init();
 
             launchTest();
         };
@@ -130,9 +131,11 @@ var app = (function (self){
         };
 
         function ostinatiList() {
-            $.getJSON( "data/ostinati.binaire.json", function( ostinati ) {
+            $.getJSON( "data/ostinati.binaire.json", function( rawOstinatiList ) {
                 console.log("j'ai récupéré le json !!");
-                DrumBlock.drawOstinatiList(ostinati);
+                
+                var enrichedOstinatiList = FileManager.convertRawChopToEnrichedChop(rawOstinatiList);
+                DrumBlock.drawOstinatiList(enrichedOstinatiList);
             });
         };
 

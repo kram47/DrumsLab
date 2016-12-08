@@ -123,40 +123,25 @@ var DrumBlock = (function() {
 
         // Dessin de chaque temps de la mesure
         bar.getArrays().forEach(function(listNotes) {
-                var beatDivision = listNotes.length;
-                // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
-                var beatSize = (barSize - (2 * jeux)) / beatDivision;
+            var beatDivision = listNotes.length;
+            // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
+            var beatSize = (barSize - (2 * jeux)) / beatDivision;
 
-                xPosition += jeux;
-                // Dessin du temps (correspondant à x bloc carrés, x étant le nombre de note du temps)
-                drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
-                xPosition += beatDivision * beatSize;
-                xPosition += jeux;
+            xPosition += jeux;
+            // Dessin du temps (correspondant à x bloc carrés, x étant le nombre de note du temps)
+            drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
+            xPosition += beatDivision * beatSize;
+            xPosition += jeux;
         });
     };
 
     /*
         Dessine un ostinato à partir d'un temps en bloc
      */
-    // TODO : move to Transformation
     function drawOstinatoBar(ostinato, xStart = 0, yStart = 0) {
+        var barToSend = Transformation.convertOstinatoBeatToBar(ostinato);
         var xPosition = xStart, yPosition = yStart;
-        var bar = [];
-
-        /*
-        bar = [
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-        ]
-        */
-
-        for ( var i = 0 ; i < 4 ; i++ ) {
-            bar.push(ostinato);
-        }
-
-        var barToSend = new Bar(bar);
+        
         drawBar(barToSend, xPosition, yPosition);
     };
 
@@ -185,14 +170,16 @@ var DrumBlock = (function() {
     function drawOstinatiList(ostinati, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
 
-        for (var i = 0 ; i < ostinati.length ; i++) {
-            var ostinatoToDraw = ostinati[i];
-            var textXPostion = xPosition + 5, textYPostion = yPosition + (i * 75 + 10);
-            var ostinatoXPostion = xPosition, ostinatoYPostion = yPosition + (i * 75 + 25);
+        ostinati.forEach(function(ostinatoToDraw, index) {
+
+            var textXPostion = xPosition + 5, textYPostion = yPosition + (index * 100 + 10);
+            var ostinatoXPostion = xPosition, ostinatoYPostion = yPosition + (index * 100 + 25);
 
             drawTitle(ostinatoToDraw.title, textXPostion, textYPostion);
-            drawOstinatoBar(ostinatoToDraw.rythmCode, ostinatoXPostion, ostinatoYPostion);
-        }
+            drawOstinatoBar(ostinatoToDraw.pattern, ostinatoXPostion, ostinatoYPostion);
+
+        });
+
     };
 
 
