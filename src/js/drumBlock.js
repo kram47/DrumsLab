@@ -109,6 +109,39 @@ var DrumBlock = (function() {
         });
     };
 
+
+    function calculateBarTime(listNotes) {
+
+        var totalTime = 0.0;
+        
+        listNotes.forEach(function (note) {
+
+            totalTime += (1 / note.time);
+
+        });
+
+        return totalTime;
+    }
+
+    function calculateCrocheNumber(listNotes) {
+
+        // TODO : calculer le débit ternaire ou non car calcul différent.
+        var isTernary = false;
+
+        // Unité de base est la double croche
+        var unitTimeBase = 1/16; 
+
+        var crocheNumber = 0;
+
+        listNotes.forEach(function (note) {
+
+            crocheNumber += ( 1 / note.time ) / unitTimeBase; // => (1/8) / (1/16) == 2
+
+        });
+
+        return crocheNumber;
+    }
+
     /*
         Dessine une mesure en blocs
      */
@@ -123,7 +156,11 @@ var DrumBlock = (function() {
 
         // Dessin de chaque temps de la mesure
         bar.getArrays().forEach(function(listNotes) {
-                var beatDivision = listNotes.length;
+            
+            var time = calculateBarTime(listNotes);
+            if (time == 1/4)
+            {
+                var beatDivision = calculateCrocheNumber(listNotes);
                 // Calcul de la longueur d'une division du temps (dépend du nombre de note dans le temps)
                 var beatSize = (barSize - (2 * jeux)) / beatDivision;
 
@@ -132,31 +169,17 @@ var DrumBlock = (function() {
                 drawBeat(listNotes, xPosition, yPosition, baseBeatSize, beatSize);
                 xPosition += beatDivision * beatSize;
                 xPosition += jeux;
+            }
         });
     };
 
     /*
         Dessine un ostinato à partir d'un temps en bloc
      */
-    // TODO : move to Transformation
     function drawOstinatoBar(ostinato, xStart = 0, yStart = 0) {
+        var barToSend = Transformation.convertOstinatoBeatToBar(ostinato);
         var xPosition = xStart, yPosition = yStart;
-        var bar = [];
-
-        /*
-        bar = [
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-            [0,0,1,0], // Beat (Ostinato)
-        ]
-        */
-
-        for ( var i = 0 ; i < 4 ; i++ ) {
-            bar.push(ostinato);
-        }
-
-        var barToSend = new Bar(bar);
+        
         drawBar(barToSend, xPosition, yPosition);
     };
 
@@ -185,14 +208,16 @@ var DrumBlock = (function() {
     function drawOstinatiList(ostinati, xStart = 0, yStart = 0) {
         var xPosition = xStart, yPosition = yStart;
 
-        for (var i = 0 ; i < ostinati.length ; i++) {
-            var ostinatoToDraw = ostinati[i];
-            var textXPostion = xPosition + 5, textYPostion = yPosition + (i * 75 + 10);
-            var ostinatoXPostion = xPosition, ostinatoYPostion = yPosition + (i * 75 + 25);
+        ostinati.forEach(function(ostinatoToDraw, index) {
+
+            var textXPostion = xPosition + 5, textYPostion = yPosition + (index * 100 + 10);
+            var ostinatoXPostion = xPosition, ostinatoYPostion = yPosition + (index * 100 + 25);
 
             drawTitle(ostinatoToDraw.title, textXPostion, textYPostion);
-            drawOstinatoBar(ostinatoToDraw.rythmCode, ostinatoXPostion, ostinatoYPostion);
-        }
+            drawOstinatoBar(ostinatoToDraw.pattern, ostinatoXPostion, ostinatoYPostion);
+
+        });
+
     };
 
 

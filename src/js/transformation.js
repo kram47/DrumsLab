@@ -33,7 +33,8 @@ var Transformation = (function () {
         init : init,
         convertBarFlow : convertBarFlow,
         addAccent : addAccent,
-        addAccentFromMask : addAccentFromMask
+        addAccentFromMask : addAccentFromMask,
+        convertOstinatoBeatToBar : convertOstinatoBeatToBar,
     };
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
@@ -165,6 +166,21 @@ var Transformation = (function () {
         });
 
         return bar;
+    };
+
+    /*
+        Convert a ostinato beat to a 4 times bar
+    */
+    function convertOstinatoBeatToBar(ostinato) {
+        var bar = [];
+
+        for (var i = 0 ; i < 4 ; i++ ) {
+            bar.push(ostinato);
+        }
+
+        var barToSend = new Bar(bar);
+        
+        return barToSend;
     };
 
     return transformation;
