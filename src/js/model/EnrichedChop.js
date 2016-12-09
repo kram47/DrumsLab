@@ -23,8 +23,48 @@ var EnrichedChop = function(rawChop) {
     self.pattern = [];
 
     rawChop.pattern.forEach(function (note) {
-        self.pattern.push(new Note({time: note}));
+        var enrichedNote = self.createEnrichedNoteFromRaw(note);
+        self.pattern.push(enrichedNote);
     });
 
-
 };
+
+
+EnrichedChop.prototype.createEnrichedNoteFromRaw = function(rawNote) {
+
+    console.log("ma note est : " + rawNote);
+
+    var time, 
+        tune,
+        isTernary, 
+        isDotted,
+        isRest
+    ;
+
+    isRest = (rawNote.indexOf('r') != -1)? true : false;
+    isTernary = (rawNote.indexOf('t') != -1)? true : false;
+    isDotted = (rawNote.indexOf('d') != -1)? true : false;
+    time = rawNote.replace('d', '')
+                  .replace('r', '')
+                  .replace('t', '');
+    tune = "c/5";
+
+    return new Note({
+        time: time,
+        tune : tune,
+        isRest : isRest,
+        isTernary : isTernary,
+        isDotted : isDotted,
+    });
+};
+
+
+EnrichedChop.prototype.IsTernary = function() {
+    return self.isTernary;
+}
+EnrichedChop.prototype.IsDotted = function() {
+    return self.isDotted;
+}
+EnrichedChop.prototype.IsRest = function() {
+    return self.isRest;
+}
