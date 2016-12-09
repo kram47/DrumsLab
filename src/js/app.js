@@ -85,6 +85,7 @@ var app = (function (self){
             Transformation.init();
             ScoreManager.init();
             FileManager.init();
+            BlockManager.init();
 
             launchTest();
         };
@@ -107,8 +108,9 @@ var app = (function (self){
             //addAccent();
             //getNoteFromBar();
             //conversion();
-            ostinatiList();
-            vexFlow();
+            //ostinatiList();
+            // vexFlow();
+            blockRefacto();
         }
 
         function conversion() {
@@ -303,12 +305,12 @@ var app = (function (self){
                 [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
             ];
 
-/*
+            /*
             var ostinato15 = [
                 [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
             ];
 
-*/
+            */
 
 
             [
@@ -332,7 +334,12 @@ var app = (function (self){
                 ScoreManager.initVoice(ostinato, 10, 75 * index);
 
             });
+        }
 
+        function blockRefacto() {
+            BlockManager.drawNote(new Note(), 10, 10);
+            BlockManager.drawNote(new Note({time:8}), 10, 10);
+            BlockManager.drawNote(new Note({time:4}), 10, 10);
         }
 
     return app;

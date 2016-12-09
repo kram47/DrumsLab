@@ -12,12 +12,6 @@
 var EnrichedChop = function(rawChop) {
     var _name = "EnrichedChop";
     var self = this;
-    /*
-        Log d'un message avec le nom du module
-    */
-    self.log = function(message) {
-        console.log("["+_name+"] " + message);
-    };
 
     self.title = rawChop.title;
     self.pattern = [];
@@ -27,6 +21,13 @@ var EnrichedChop = function(rawChop) {
         self.pattern.push(enrichedNote);
     });
 
+
+    /*
+        Log d'un message avec le nom du module
+    */
+    self.log = function(message) {
+        console.log("["+_name+"] " + message);
+    };
 };
 
 
@@ -38,8 +39,7 @@ EnrichedChop.prototype.createEnrichedNoteFromRaw = function(rawNote) {
         tune,
         isTernary, 
         isDotted,
-        isRest
-    ;
+        isRest;
 
     isRest = (rawNote.indexOf('r') != -1)? true : false;
     isTernary = (rawNote.indexOf('t') != -1)? true : false;
