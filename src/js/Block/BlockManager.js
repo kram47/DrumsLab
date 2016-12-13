@@ -99,14 +99,17 @@ var BlockManager = (function () {
             Définit la longueur de la note en fonction de sa valeur temporelle
      */
     function drawNote(note, xStart, yStart) {
-/*        4  =>  4/4;
+
+/*        
+        4  =>  4/4;
         8  =>  2/4;
         16 =>  1/4;
 
         4  =>  2/3;
-        8  =>  1/3;*/
+        8  =>  1/3;
+*/
 
-        var binaryDuration =  [1, 2, 4];
+     /*   var binaryDuration =  [1, 2, 4];
         var ternaryDuration =  [1, 2];
 
         var beatDivision;
@@ -121,13 +124,22 @@ var BlockManager = (function () {
             durationNote += (beatDivision * beatDivision) / (note.time * 2)
         }
 
+*/
 
-        // TODO Adapter xSize à la longueur temporelle réelle de la note
-        var multiplicator = durationNote / beatDivision;
-        var xSize = config.note.xBeatSizeBase * multiplicator;
+        var xSize = config.note.xBeatSizeBase * note.beatDuration;
 
         drawRectangle(xStart, yStart, xSize, config.note.yNoteSize);
     };
+
+      /*
+        Dessine une note
+            Prend en compte la taille standard d'une note
+            Définit la longueur de la note en fonction de sa valeur temporelle
+     */
+    function drawBeat() {
+
+    };
+
 
 
     return blockManager;
