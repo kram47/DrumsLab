@@ -104,7 +104,7 @@ var BlockManager = (function () {
     /**
      * Dessine une note
      *     Prend en compte la taille standard d'une note
-     *     Définit la longueur de la note en fonction de sa valeur temporelle 
+     *     Définit la longueur de la note en fonction de sa valeur temporelle
      * @param  {Note} note - The note to draw
      * @param  {int} xStart - x position of note to draw (from up-left corner)
      * @param  {int} yStart - y position of note to draw (from up-left corner)
@@ -112,7 +112,7 @@ var BlockManager = (function () {
      */
     function drawNote(note, xStart, yStart) {
 
-    /*        
+    /*
         4  =>  4/4;
         8  =>  2/4;
         16 =>  1/4;
@@ -121,7 +121,7 @@ var BlockManager = (function () {
         8  =>  1/3;
     */
 
-    /*   
+    /*
         var binaryDuration =  [1, 2, 4];
         var ternaryDuration =  [1, 2];
 
@@ -144,13 +144,21 @@ var BlockManager = (function () {
 
     /**
      * Dessine un temps
-     * @param {array[Note]} notes - An array with the beat's notes
+     * @param {Note|Array} notes - An array with the beat's notes
+     * @param {Object} signature - Signature of bar in which is the beat
      */
-    function drawBeat(notes) {
+    function drawBeat(notes, signature) {
 
+        if (! (notes instanceof Array))
+            throw { type : "type",  message : "'notes' should be an array."};
+
+        var totalDuration = 0.0;
         notes.map(note => {
-
+            totalDuration += note.beatDuration;
         });
+
+
+        log(`totalDuration of array([${notes.map(x => x.time).join(',')}])= ${totalDuration}`);
 
     };
 

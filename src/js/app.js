@@ -305,13 +305,6 @@ var app = (function (self){
                 [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
             ];
 
-            /*
-            var ostinato15 = [
-                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
-            ];
-
-            */
-
 
             [
                 ostinato0,
@@ -340,7 +333,13 @@ var app = (function (self){
             BlockManager.drawNote(new Note(), 10, 10);
             BlockManager.drawNote(new Note({time:8}), 10, 10);
             BlockManager.drawNote(new Note({time:4}), 10, 10);
-            BlockManager.drawBeat(new Note({time:4}), 10, 10);
+
+
+            BlockManager.drawBeat([
+                new Note({time:8}),
+                new Note({time:16}),
+                new Note({time:16})
+            ], 10, 10);
 
         }
 

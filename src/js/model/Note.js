@@ -9,198 +9,217 @@
  *
  */
 
-var Note = function(settings) {
+var Note = (function(){
 
-    // Initialization with default values
-    this.type = constants.note.type._NORMAL_;
-    this.tune = "c/5";
-    this.time = 16;
-    this.isRest = false;
-    this.isTernary = false;
-    this.isDotted = false;
-    this.side = constants.note.side._NONE_;
-    this.fingering = constants.note.fingering._NORMAL_;
-    this.accent = constants.note.accent._NORMAL_;
+    /**
+     * @constructor
+     * @param {object} settings - An object with parameters with used for instanciation
+     */
+    var Note = function(settings) {
 
-    // Recovery of param settings
-    if (typeof(settings) != "undefined")
-        this.retrieveSettings(settings);
+        // Initialization with default values
+        this.type = constants.note.type._NORMAL_;
+        this.tune = "c/5";
+        this.time = 16;
+        this.isRest = false;
+        this.isTernary = false;
+        this.isDotted = false;
+        this.side = constants.note.side._NONE_;
+        this.fingering = constants.note.fingering._NORMAL_;
+        this.accent = constants.note.accent._NORMAL_;
 
-    // Computation of properties
-    this.beatDuration = this.GetNoteDurationInBeat();
-};
+        // Recovery of param settings
+        if (typeof(settings) != "undefined")
+            this.retrieveSettings(settings);
 
-/**
- * Retrieve all settings for object construction
- * @param  {Object}
- * @return {void}
- */
-Note.prototype.retrieveSettings = function(settings) {
-    // TODO : rendre générique les vérification de valeurs settings
+        // Computation of properties
+        this.beatDuration = this.GetNoteDurationInBeat();
+    };
 
-    if (typeof settings.type != "undefined")
-    {
-        if (typeof settings.type != "number")
-            throw { message : "Bad 'note type' parameter type" };
+    /**
+     * Retrieve all settings for object construction
+     * @param  {Object}
+     * @return {void}
+     */
+    Note.prototype.retrieveSettings = function(settings) {
+        // TODO : rendre générique les vérification de valeurs settings
 
-        if (settings.type == constants.note.type._NORMAL_
-         || settings.type == constants.note.type._CROSS_
-         || settings.type == constants.note.type._CROSS_CIRCLE_
-         || settings.type == constants.note.type._STAR_)
+        if (typeof settings.type != "undefined")
         {
-            this.type = settings.type;
-        } else {
-            throw { message : "Bad note type" };
+            if (typeof settings.type != "number")
+                throw { message : "Bad 'note type' parameter type" };
+
+            if (settings.type == constants.note.type._NORMAL_
+             || settings.type == constants.note.type._CROSS_
+             || settings.type == constants.note.type._CROSS_CIRCLE_
+             || settings.type == constants.note.type._STAR_)
+            {
+                this.type = settings.type;
+            } else {
+                throw { message : "Bad note type" };
+            }
         }
-    }
 
-    if (typeof settings.tune != "undefined")
-    {
-        if (typeof settings.tune != "string")
-            throw { message : "Bad 'note tune parameter type" };
-
-        if (settingss.tune.match(/[ABCDEFG][#b]?\/[0-9]/g))
-            this.tune = settings.tune;
-        else
-            throw { message : "Bad note tune" };
-    }
-
-    if (typeof settings.time != "undefined")
-    {
-        if (typeof settings.time != "number")
-            throw { message : "Bad 'note time' parameter type" };
-
-        if (Tools.isPowerOf2(settings.time)) {
-            this.time = settings.time;
-        } else {
-            throw { message : "Bad note time" };
-        }
-    }
-
-    if (typeof settings.isRest != "undefined")
-    {
-        if (typeof settings.isRest != "number")
-            throw { message : "Bad 'note isRest' parameter type" };
-
-        this.isRest = settings.isRest;
-    }
-
-    if (typeof settings.isTernary != "undefined")
-    {
-        if (typeof settings.isTernary != "boolean")
-            throw { message : "Bad 'note isTernary' parameter type" };
-
-        this.isTernary = settings.isTernary;
-    }
-
-    if (typeof settings.isDotted != "undefined")
-    {
-        if (typeof settings.isDotted != "boolean")
-            throw { message : "Bad 'note isDotted' parameter type" };
-
-        this.isDotted = settings.isDotted;
-    }
-
-    if (typeof settings.side != "undefined")
-    {
-        if (typeof settings.side != "number")
-            throw { message : "Bad 'note side' parameter type" };
-
-        if (settings.side == constants.note.side._NONE_
-         || settings.side == constants.note.side._RIGHT_
-         || settings.side == constants.note.side._LEFT_)
+        if (typeof settings.tune != "undefined")
         {
-            this.side = settings.side;
-        } else {
-            throw { message : "Bad 'note side'" };
+            if (typeof settings.tune != "string")
+                throw { message : "Bad 'note tune parameter type" };
+
+            if (settingss.tune.match(/[ABCDEFG][#b]?\/[0-9]/g))
+                this.tune = settings.tune;
+            else
+                throw { message : "Bad note tune" };
         }
-    }
 
-    if (typeof settings.fingering != "undefined")
-    {
-        if (typeof settings.fingering != "number")
-            throw { message : "Bad 'note fingering' parameter type" };
-
-        if (settings.fingering == constants.note.fingering._NORMAL_
-         || settings.fingering == constants.note.fingering._FLAT_
-         || settings.fingering == constants.note.fingering._RA_
-         || settings.fingering == constants.note.fingering._CHEESE_)
+        if (typeof settings.time != "undefined")
         {
-            this.fingering = settings.fingering;
-        } else {
-            throw { message : "Bad 'note fingering'" };
+            if (typeof settings.time != "number")
+                throw { message : "Bad 'note time' parameter type" };
+
+            if (Tools.isPowerOf2(settings.time)) {
+                this.time = settings.time;
+            } else {
+                throw { message : "Bad note time" };
+            }
         }
-    }
 
-    if (typeof settings.accent != "undefined")
-    {
-        if (typeof settings.accent != "number")
-            throw { message : "Bad 'note accent' parameter type" };
-
-        if (settings.accent == constants.note.accent._NORMAL_
-         || settings.accent == constants.note.accent._GHOST_
-         || settings.accent == constants.note.accent._ACCENT_)
+        if (typeof settings.isRest != "undefined")
         {
-            this.accent = settings.accent;
-        } else {
-            throw { message : "Bad 'note accent'" };
+            if (typeof settings.isRest != "number")
+                throw { message : "Bad 'note isRest' parameter type" };
+
+            this.isRest = settings.isRest;
         }
-    }
-};
 
-Note.prototype.createNoteFromRaw = function(rawNote) {
+        if (typeof settings.isTernary != "undefined")
+        {
+            if (typeof settings.isTernary != "boolean")
+                throw { message : "Bad 'note isTernary' parameter type" };
 
-    console.log("ma note est : " + rawNote);
+            this.isTernary = settings.isTernary;
+        }
 
-    var time,
-        tune,
-        isTernary,
-        isDotted,
-        isRest;
+        if (typeof settings.isDotted != "undefined")
+        {
+            if (typeof settings.isDotted != "boolean")
+                throw { message : "Bad 'note isDotted' parameter type" };
 
-    isRest = (rawNote.indexOf('r') != -1)? true : false;
-    isTernary = (rawNote.indexOf('t') != -1)? true : false;
-    isDotted = (rawNote.indexOf('d') != -1)? true : false;
-    time = rawNote.replace('d', '')
-                  .replace('r', '')
-                  .replace('t', '');
-    tune = "c/5";
+            this.isDotted = settings.isDotted;
+        }
 
-    return new Note({
-        time: time,
-        tune : tune,
-        isRest : isRest,
-        isTernary : isTernary,
-        isDotted : isDotted,
-    });
-};
+        if (typeof settings.side != "undefined")
+        {
+            if (typeof settings.side != "number")
+                throw { message : "Bad 'note side' parameter type" };
 
-Note.prototype.GetNoteDurationInBeat = function() {
+            if (settings.side == constants.note.side._NONE_
+             || settings.side == constants.note.side._RIGHT_
+             || settings.side == constants.note.side._LEFT_)
+            {
+                this.side = settings.side;
+            } else {
+                throw { message : "Bad 'note side'" };
+            }
+        }
 
-    // La base de calcul est la croches
-    var crocheDivisionNumber = 8;
+        if (typeof settings.fingering != "undefined")
+        {
+            if (typeof settings.fingering != "number")
+                throw { message : "Bad 'note fingering' parameter type" };
 
-    // Calcul du rapport de division par rapport à la croche
-    // Combien de note(s) de durée(s) "this.time" peut on mettre à la place d'une croche (la notion de ternaire n'intervient pas encore)
-    var crocheMultiplicator = this.time / crocheDivisionNumber;
+            if (settings.fingering == constants.note.fingering._NORMAL_
+             || settings.fingering == constants.note.fingering._FLAT_
+             || settings.fingering == constants.note.fingering._RA_
+             || settings.fingering == constants.note.fingering._CHEESE_)
+            {
+                this.fingering = settings.fingering;
+            } else {
+                throw { message : "Bad 'note fingering'" };
+            }
+        }
 
-    // La croche binaire dure un demi temps
-    var binaryCrocheDuration = 1/2;
-    // La croche ternaire dure un tiers de temps
-    var ternaryCrocheDuration = 1/3;
+        if (typeof settings.accent != "undefined")
+        {
+            if (typeof settings.accent != "number")
+                throw { message : "Bad 'note accent' parameter type" };
 
-    // La durée de la note est {crocheMultiplicator} fois plus courte que la croche
-    // On divise donc la durée de la croche qui convient pour avoir le temps final
-    var noteDuration = this.isTernary
-        ? (ternaryCrocheDuration / crocheMultiplicator)
-        : (binaryCrocheDuration / crocheMultiplicator);
+            if (settings.accent == constants.note.accent._NORMAL_
+             || settings.accent == constants.note.accent._GHOST_
+             || settings.accent == constants.note.accent._ACCENT_)
+            {
+                this.accent = settings.accent;
+            } else {
+                throw { message : "Bad 'note accent'" };
+            }
+        }
+    };
 
-    // Si la note est pointée on ajoute la moitié de sa durée actuelle.
-    if (this.isDotted)
-    {
-        var halfDuration = noteDuration / 2;
-        noteDuration += halfDuration;
-    }
+    /**
+     * @param  {string} rawNote - the base note in raw format (ex: "4dtrLf" -> A ternary dotted rest time played with left hand as a fla)
+     * @return {Note}
+     */
+    Note.prototype.createNoteFromRaw = function(rawNote) {
 
-    return noteDuration;
-};
+        console.log("ma note est : " + rawNote);
+
+        var time,
+            tune,
+            isTernary,
+            isDotted,
+            isRest;
+
+        isRest = (rawNote.indexOf('r') != -1)? true : false;
+        isTernary = (rawNote.indexOf('t') != -1)? true : false;
+        isDotted = (rawNote.indexOf('d') != -1)? true : false;
+        time = rawNote.replace('d', '')
+                      .replace('r', '')
+                      .replace('t', '');
+        tune = "c/5";
+
+        return new Note({
+            time: time,
+            tune : tune,
+            isRest : isRest,
+            isTernary : isTernary,
+            isDotted : isDotted,
+        });
+    };
+
+    /**
+     *  @returns {Number} the duration of the beat within a time
+     */
+    Note.prototype.GetNoteDurationInBeat = function() {
+
+        // La base de calcul est la croches
+        var crocheDivisionNumber = 8;
+
+        // Calcul du rapport de division par rapport à la croche
+        // Combien de note(s) de durée(s) "this.time" peut on mettre à la place d'une croche (la notion de ternaire n'intervient pas encore)
+        var crocheMultiplicator = this.time / crocheDivisionNumber;
+
+        // La croche binaire dure un demi temps
+        var binaryCrocheDuration = 1/2;
+        // La croche ternaire dure un tiers de temps
+        var ternaryCrocheDuration = 1/3;
+
+        // La durée de la note est {crocheMultiplicator} fois plus courte que la croche
+        // On divise donc la durée de la croche qui convient pour avoir le temps final
+        var noteDuration = this.isTernary
+            ? (ternaryCrocheDuration / crocheMultiplicator)
+            : (binaryCrocheDuration / crocheMultiplicator);
+
+        // Si la note est pointée on ajoute la moitié de sa durée actuelle.
+        if (this.isDotted)
+        {
+            var halfDuration = noteDuration / 2;
+            noteDuration += halfDuration;
+        }
+
+        return noteDuration;
+    };
+
+
+
+    return Note;
+
+})();
