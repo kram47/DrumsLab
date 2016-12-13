@@ -1,3 +1,5 @@
 # Bower components
 src/components/
 .idea/
+node_modules/
+babel_lib/

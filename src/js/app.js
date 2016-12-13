@@ -340,6 +340,8 @@ var app = (function (self){
             BlockManager.drawNote(new Note(), 10, 10);
             BlockManager.drawNote(new Note({time:8}), 10, 10);
             BlockManager.drawNote(new Note({time:4}), 10, 10);
+            BlockManager.drawBeat(new Note({time:4}), 10, 10);
+            
         }
 
     return app;
