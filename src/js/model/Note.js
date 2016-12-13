@@ -30,7 +30,7 @@ var Note = (function(){
 
         // Recovery of param settings
         if (typeof(settings) != "undefined")
-            this.retrieveSettings(settings);
+            retrieveSettings(this, settings);
 
         // Computation of properties
         this.beatDuration = this.GetNoteDurationInBeat();
@@ -41,7 +41,7 @@ var Note = (function(){
      * @param  {Object}
      * @return {void}
      */
-    Note.prototype.retrieveSettings = function(settings) {
+    function retrieveSettings(self, settings) {
         // TODO : rendre générique les vérification de valeurs settings
 
         if (typeof settings.type != "undefined")
@@ -54,7 +54,7 @@ var Note = (function(){
              || settings.type == constants.note.type._CROSS_CIRCLE_
              || settings.type == constants.note.type._STAR_)
             {
-                this.type = settings.type;
+                self.type = settings.type;
             } else {
                 throw { message : "Bad note type" };
             }
@@ -66,7 +66,7 @@ var Note = (function(){
                 throw { message : "Bad 'note tune parameter type" };
 
             if (settingss.tune.match(/[ABCDEFG][#b]?\/[0-9]/g))
-                this.tune = settings.tune;
+                self.tune = settings.tune;
             else
                 throw { message : "Bad note tune" };
         }
@@ -77,7 +77,7 @@ var Note = (function(){
                 throw { message : "Bad 'note time' parameter type" };
 
             if (Tools.isPowerOf2(settings.time)) {
-                this.time = settings.time;
+                self.time = settings.time;
             } else {
                 throw { message : "Bad note time" };
             }
@@ -88,7 +88,7 @@ var Note = (function(){
             if (typeof settings.isRest != "number")
                 throw { message : "Bad 'note isRest' parameter type" };
 
-            this.isRest = settings.isRest;
+            self.isRest = settings.isRest;
         }
 
         if (typeof settings.isTernary != "undefined")
@@ -96,7 +96,7 @@ var Note = (function(){
             if (typeof settings.isTernary != "boolean")
                 throw { message : "Bad 'note isTernary' parameter type" };
 
-            this.isTernary = settings.isTernary;
+            self.isTernary = settings.isTernary;
         }
 
         if (typeof settings.isDotted != "undefined")
@@ -104,7 +104,7 @@ var Note = (function(){
             if (typeof settings.isDotted != "boolean")
                 throw { message : "Bad 'note isDotted' parameter type" };
 
-            this.isDotted = settings.isDotted;
+            self.isDotted = settings.isDotted;
         }
 
         if (typeof settings.side != "undefined")
@@ -116,7 +116,7 @@ var Note = (function(){
              || settings.side == constants.note.side._RIGHT_
              || settings.side == constants.note.side._LEFT_)
             {
-                this.side = settings.side;
+                self.side = settings.side;
             } else {
                 throw { message : "Bad 'note side'" };
             }
@@ -132,7 +132,7 @@ var Note = (function(){
              || settings.fingering == constants.note.fingering._RA_
              || settings.fingering == constants.note.fingering._CHEESE_)
             {
-                this.fingering = settings.fingering;
+                self.fingering = settings.fingering;
             } else {
                 throw { message : "Bad 'note fingering'" };
             }
@@ -147,7 +147,7 @@ var Note = (function(){
              || settings.accent == constants.note.accent._GHOST_
              || settings.accent == constants.note.accent._ACCENT_)
             {
-                this.accent = settings.accent;
+                self.accent = settings.accent;
             } else {
                 throw { message : "Bad 'note accent'" };
             }
