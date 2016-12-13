@@ -135,7 +135,7 @@ var app = (function (self){
         function ostinatiList() {
             $.getJSON( "data/ostinati.binaire.json", function( rawOstinatiList ) {
                 console.log("j'ai récupéré le json !!");
-                
+
                 var richOstinatiList = FileManager.convertRawChopToRichChop(rawOstinatiList);
                 DrumBlock.drawOstinatiList(richOstinatiList);
             });
@@ -341,7 +341,7 @@ var app = (function (self){
             BlockManager.drawNote(new Note({time:8}), 10, 10);
             BlockManager.drawNote(new Note({time:4}), 10, 10);
             BlockManager.drawBeat(new Note({time:4}), 10, 10);
-            
+
         }
 
     return app;
