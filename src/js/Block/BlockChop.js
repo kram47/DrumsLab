@@ -9,7 +9,7 @@
 *
 */
 
-var BlockChop = function(enrichedChop) {
+var BlockChop = function(richChop) {
     var _name = "BlockChop";
     var self = this;
 

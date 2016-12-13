@@ -136,8 +136,8 @@ var app = (function (self){
             $.getJSON( "data/ostinati.binaire.json", function( rawOstinatiList ) {
                 console.log("j'ai récupéré le json !!");
                 
-                var enrichedOstinatiList = FileManager.convertRawChopToEnrichedChop(rawOstinatiList);
-                DrumBlock.drawOstinatiList(enrichedOstinatiList);
+                var richOstinatiList = FileManager.convertRawChopToRichChop(rawOstinatiList);
+                DrumBlock.drawOstinatiList(richOstinatiList);
             });
         };
 
