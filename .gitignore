@@ -1,5 +1,11 @@
 # Bower components
 src/components/
+
+# Webstorm folder
 .idea/
+
+# node package directory
 node_modules/
-babel_lib/
+
+# Tranpiled JS files
+src/compiled_js/
