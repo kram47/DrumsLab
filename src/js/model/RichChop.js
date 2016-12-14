@@ -1,7 +1,7 @@
 /**
 *
 * @file
-*     model/EnrichedChop.js
+*     model/RichChop.js
 * @description
 *     Represent a list of notes (pattern) and informations about it in a usable format
 * @author
@@ -9,28 +9,29 @@
 *
 */
 
-var EnrichedChop = function(rawChop) {
-    var _name = "EnrichedChop";
+var RichChop = function(rawChop) {
+    var _name = "RichChop";
     var self = this;
+
+    self.title = rawChop.title;
+    self.pattern = [];
+
+    rawChop.pattern.forEach(function (note) {
+        var richNote = self.createRichNoteFromRaw(note);
+        self.pattern.push(richNote);
+    });
+
+
     /*
         Log d'un message avec le nom du module
     */
     self.log = function(message) {
         console.log("["+_name+"] " + message);
     };
-
-    self.title = rawChop.title;
-    self.pattern = [];
-
-    rawChop.pattern.forEach(function (note) {
-        var enrichedNote = self.createEnrichedNoteFromRaw(note);
-        self.pattern.push(enrichedNote);
-    });
-
 };
 
 
-EnrichedChop.prototype.createEnrichedNoteFromRaw = function(rawNote) {
+RichChop.prototype.createRichNoteFromRaw = function(rawNote) {
 
     console.log("ma note est : " + rawNote);
 
@@ -38,8 +39,7 @@ EnrichedChop.prototype.createEnrichedNoteFromRaw = function(rawNote) {
         tune,
         isTernary, 
         isDotted,
-        isRest
-    ;
+        isRest;
 
     isRest = (rawNote.indexOf('r') != -1)? true : false;
     isTernary = (rawNote.indexOf('t') != -1)? true : false;
@@ -59,12 +59,12 @@ EnrichedChop.prototype.createEnrichedNoteFromRaw = function(rawNote) {
 };
 
 
-EnrichedChop.prototype.IsTernary = function() {
+RichChop.prototype.IsTernary = function() {
     return self.isTernary;
 }
-EnrichedChop.prototype.IsDotted = function() {
+RichChop.prototype.IsDotted = function() {
     return self.isDotted;
 }
-EnrichedChop.prototype.IsRest = function() {
+RichChop.prototype.IsRest = function() {
     return self.isRest;
 }

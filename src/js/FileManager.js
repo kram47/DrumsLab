@@ -26,7 +26,7 @@ var FileManager = (function () {
     var fileManager = {
         config : config,
         init : init,
-        convertRawChopToEnrichedChop : convertRawChopToEnrichedChop,
+        convertRawChopToRichChop : convertRawChopToRichChop,
     };
 
     // -- -- P R I V A T E   P R O P E R T I E S -- --
@@ -50,18 +50,18 @@ var FileManager = (function () {
     
 
     /*
-        Convert raw file format (raw chop) to usable data (enriched chop)
+        Convert raw file format (raw chop) to usable data (rich chop)
     */
-    function convertRawChopToEnrichedChop(rawChopList) {
+    function convertRawChopToRichChop(rawChopList) {
         
-        var enrichedChopList = [];
+        var richChopList = [];
 
         rawChopList.forEach(function (rawChop, index) {
-            var item = new EnrichedChop(rawChop);
-            enrichedChopList.push(item);
+            var item = new RichChop(rawChop);
+            richChopList.push(item);
         });
 
-        return enrichedChopList;
+        return richChopList;
     };
 
     return fileManager;

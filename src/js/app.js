@@ -85,6 +85,7 @@ var app = (function (self){
             Transformation.init();
             ScoreManager.init();
             FileManager.init();
+            BlockManager.init();
 
             launchTest();
         };
@@ -107,8 +108,9 @@ var app = (function (self){
             //addAccent();
             //getNoteFromBar();
             //conversion();
-            ostinatiList();
-            vexFlow();
+            //ostinatiList();
+            // vexFlow();
+            blockRefacto();
         }
 
         function conversion() {
@@ -133,9 +135,9 @@ var app = (function (self){
         function ostinatiList() {
             $.getJSON( "data/ostinati.binaire.json", function( rawOstinatiList ) {
                 console.log("j'ai récupéré le json !!");
-                
-                var enrichedOstinatiList = FileManager.convertRawChopToEnrichedChop(rawOstinatiList);
-                DrumBlock.drawOstinatiList(enrichedOstinatiList);
+
+                var richOstinatiList = FileManager.convertRawChopToRichChop(rawOstinatiList);
+                DrumBlock.drawOstinatiList(richOstinatiList);
             });
         };
 
@@ -303,13 +305,6 @@ var app = (function (self){
                 [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
             ];
 
-/*
-            var ostinato15 = [
-                [new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"}), new Note({time : "16"})]
-            ];
-
-*/
-
 
             [
                 ostinato0,
@@ -332,6 +327,52 @@ var app = (function (self){
                 ScoreManager.initVoice(ostinato, 10, 75 * index);
 
             });
+        }
+
+        function blockRefacto() {
+            /*BlockManager.drawNote(new Note(), 10, 10);
+            BlockManager.drawNote(new Note({time:8}), 10, 10);
+            BlockManager.drawNote(new Note({time:4}), 10, 10);*/
+
+/*            BlockManager.drawBeat([
+                new Note({time:8}),
+                new Note({time:16}),
+                new Note({time:16})
+            ], 10, 10);
+*/
+            var signature = {
+                amount : 4,
+                value : 4
+            };
+
+            var bar = new Bar(
+            [
+                [
+                    new Note({time:8, isTernary:true}),
+                    new Note({time:8, isTernary:true}),
+                    new Note({time:8, isTernary:true}),
+                ],
+                [
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:8}),
+                ],
+                [
+                    new Note({time:16}),
+                    new Note({time:8}),
+                    new Note({time:16}),
+                ],
+                [
+                    new Note({time:8}),
+                    new Note({time:16}),
+                    new Note({time:16}),
+                ],
+            ], signature);
+
+
+
+            BlockManager.drawBar(bar, signature);
 
         }
 

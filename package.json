@@ -1,0 +1,31 @@
+{
+  "name": "drumix",
+  "version": "0.0.1",
+  "description": "laboratory for drums exercises",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "./node_modules/.bin/babel src/js -d src/compiled_js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kram47/DrumsLab.git"
+  },
+  "keywords": [
+    "drums"
+  ],
+  "author": "kram47",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kram47/DrumsLab/issues"
+  },
+  "homepage": "https://github.com/kram47/DrumsLab#readme",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
+    "bower": "^1.8.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2"
+  }
+}
