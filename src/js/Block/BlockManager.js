@@ -63,6 +63,7 @@ var BlockManager = (function () {
         drawRectangle : drawRectangle,
         drawNote : drawNote,
         drawBeat : drawBeat,
+        drawBar : drawBar,
     };
 
 
@@ -108,7 +109,7 @@ var BlockManager = (function () {
      * @param  {Note} note - The note to draw
      * @param  {int} xStart - x position of note to draw (from up-left corner)
      * @param  {int} yStart - y position of note to draw (from up-left corner)
-     * @return {void}
+     * @return {Object} xSize - Longueur de la note en pixel
      */
     function drawNote(note, xStart, yStart) {
 
@@ -139,7 +140,7 @@ var BlockManager = (function () {
     */
         var xSize = config.note.xBeatSizeBase * note.beatDuration;
 
-        drawRectangle(xStart, yStart, xSize, config.note.yNoteSize);
+        return drawRectangle(xStart, yStart, xSize, config.note.yNoteSize);
     };
 
     /**
@@ -147,7 +148,7 @@ var BlockManager = (function () {
      * @param {Note|Array} notes - An array with the beat's notes
      * @param {Object} signature - Signature of bar in which is the beat
      */
-    function drawBeat(notes, signature) {
+    function drawBeat(notes, signature, xOffset) {
 
         if (! (notes instanceof Array))
             throw { type : "type",  message : "'notes' should be an array."};
@@ -157,10 +158,62 @@ var BlockManager = (function () {
             totalDuration += note.beatDuration;
         });
 
-
         log(`totalDuration of array([${notes.map(x => x.time).join(',')}])= ${totalDuration}`);
 
+        // TODO : Adapter le calcul du temps à la signature rythmique
+        // il ne faut pas forcément qu'un bloc fasse 1. (ex: en 7/8 ce sera 0.5)
+        if (totalDuration != 1)
+            log("désolé mon gars mais le temps n'est pas de la bonne taille");
+        else {
+            log("ok mon temps fait bien la bonne longueur");
+
+            let xStart = xOffset,
+                yStart = 10;
+            var noteRectangleList = [];
+
+            notes.map(note => {
+                var noteRectangle = drawNote(note, xStart, yStart);
+                xStart += noteRectangle[0].width.baseVal.value;
+                noteRectangleList.push(noteRectangle);
+            });
+
+            return noteRectangleList;
+        }
     };
+    /**
+     * Draw a bar
+     * @param {Bar} bar - The bar with all beats to draw
+     */
+    function drawBar(bar) {
+
+        if (! (bar instanceof Bar))
+            throw { type : "type",  message : "'bar' should be a Bar object."};
+
+        let xOffset = 0,
+            beatXOffset = 10;
+        var beatRectangleList = [];
+
+        // Drawing each beat one by one
+        bar.beats.map((beat) => {
+            console.log(beat);
+
+            // We add an offset between each beat
+            xOffset += beatXOffset;
+
+            // Draw the current beat
+            var noteRectangleList = drawBeat(beat, bar.signature, xOffset);
+
+            // We add the size of each note block in the beat to the offset
+            noteRectangleList.map((noteRectangle) => {
+                xOffset += noteRectangle[0].width.baseVal.value;
+            });
+
+            // we keep the list of note rectangle in a list
+            beatRectangleList.push(noteRectangleList);
+        });
+
+    };
+
 
 
 

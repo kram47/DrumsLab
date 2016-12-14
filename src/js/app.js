@@ -330,16 +330,49 @@ var app = (function (self){
         }
 
         function blockRefacto() {
-            BlockManager.drawNote(new Note(), 10, 10);
+            /*BlockManager.drawNote(new Note(), 10, 10);
             BlockManager.drawNote(new Note({time:8}), 10, 10);
-            BlockManager.drawNote(new Note({time:4}), 10, 10);
+            BlockManager.drawNote(new Note({time:4}), 10, 10);*/
 
-
-            BlockManager.drawBeat([
+/*            BlockManager.drawBeat([
                 new Note({time:8}),
                 new Note({time:16}),
                 new Note({time:16})
             ], 10, 10);
+*/
+            var signature = {
+                amount : 4,
+                value : 4
+            };
+
+            var bar = new Bar(
+            [
+                [
+                    new Note({time:8, isTernary:true}),
+                    new Note({time:8, isTernary:true}),
+                    new Note({time:8, isTernary:true}),
+                ],
+                [
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:16, isTernary:true}),
+                    new Note({time:8}),
+                ],
+                [
+                    new Note({time:16}),
+                    new Note({time:8}),
+                    new Note({time:16}),
+                ],
+                [
+                    new Note({time:8}),
+                    new Note({time:16}),
+                    new Note({time:16}),
+                ],
+            ], signature);
+
+
+
+            BlockManager.drawBar(bar, signature);
 
         }
 
