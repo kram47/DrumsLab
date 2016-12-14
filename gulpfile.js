@@ -1,9 +1,14 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var clean = require('gulp-clean');
+var watch = require('gulp-watch');
 
 gulp.task('default', ['babel'], function() {
     console.log("Developper les taches gulp");
+});
+
+gulp.task('watch', function() {
+    gulp.watch("src/js/*", ["babel"]);
 });
 
 
