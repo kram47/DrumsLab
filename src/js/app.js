@@ -345,34 +345,10 @@ var app = (function (self){
                 value : 4
             };
 
-            var bar = new Bar(
-            [
-                [
-                    new Note({time:8, isTernary:true}),
-                    new Note({time:8, isTernary:true}),
-                    new Note({time:8, isTernary:true}),
-                ],
-                [
-                    new Note({time:16, isTernary:true}),
-                    new Note({time:16, isTernary:true}),
-                    new Note({time:16, isTernary:true}),
-                    new Note({time:8}),
-                ],
-                [
-                    new Note({time:16}),
-                    new Note({time:8}),
-                    new Note({time:16}),
-                ],
-                [
-                    new Note({time:8}),
-                    new Note({time:16}),
-                    new Note({time:16}),
-                ],
-            ], signature);
-
-
-
-            BlockManager.drawBar(bar, signature);
+            BlockManager.drawBar(Generator.generateRandomBar(), 10, 10);
+            BlockManager.drawBar(Generator.generateRandomBar(), 10, 50);
+            BlockManager.drawBar(Generator.generateRandomBar(), 10, 210);
+            BlockManager.drawBar(Generator.generateRandomBar(), 10, 250);
 
         }
 
