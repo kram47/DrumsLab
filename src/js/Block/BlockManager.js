@@ -14,7 +14,8 @@
 /**
  * @module BlockManager
  */
-var BlockManager = (function () {
+var BlockManager = (function ()
+{
 
     "use strict";
 
@@ -71,6 +72,7 @@ var BlockManager = (function () {
 
     // RaphaelJS main object
     var _paper_;
+    var _chopList;
 
     // Log d'un message avec le nom du module
     function log (message) {
@@ -112,34 +114,7 @@ var BlockManager = (function () {
      * @return {Object} xSize - Longueur de la note en pixel
      */
     function drawNote(note, xStart, yStart) {
-
-    /*
-        4  =>  4/4;
-        8  =>  2/4;
-        16 =>  1/4;
-
-        4  =>  2/3;
-        8  =>  1/3;
-    */
-
-    /*
-        var binaryDuration =  [1, 2, 4];
-        var ternaryDuration =  [1, 2];
-
-        var beatDivision;
-        beatDivision = note.isTernary? 3 : 4;
-
-        var durationBase = 1 / beatDivision;
-        var durationNote = (beatDivision * beatDivision) / note.time;
-
-        // Si la note est pointée on ajoute la moitié du temps de sa durée.
-        if (note.isDotted)
-        {
-            durationNote += (beatDivision * beatDivision) / (note.time * 2)
-        }
-    */
         var xSize = config.note.xBeatSizeBase * note.beatDuration;
-
         return drawRectangle(xStart, yStart, xSize, config.note.yNoteSize);
     };
 
@@ -148,7 +123,7 @@ var BlockManager = (function () {
      * @param {Note|Array} notes - An array with the beat's notes
      * @param {Object} signature - Signature of bar in which is the beat
      */
-    function drawBeat(notes, signature, xOffset) {
+    function drawBeat(notes, signature, xPosition = 0, yPosition = 0) {
 
         if (! (notes instanceof Array))
             throw { type : "type",  message : "'notes' should be an array."};
@@ -167,8 +142,8 @@ var BlockManager = (function () {
         else {
             log("ok mon temps fait bien la bonne longueur");
 
-            let xStart = xOffset,
-                yStart = 10;
+            let xStart = xPosition,
+                yStart = yPosition;
             var noteRectangleList = [];
 
             notes.map(note => {
@@ -180,17 +155,20 @@ var BlockManager = (function () {
             return noteRectangleList;
         }
     };
+
+
     /**
      * Draw a bar
      * @param {Bar} bar - The bar with all beats to draw
+     * @param {Bar} bar - The bar with all beats to draw
+     * @param {Bar} bar - The bar with all beats to draw
      */
-    function drawBar(bar) {
+    function drawBar(bar, xPosition = 0, yPosition = 0) {
 
         if (! (bar instanceof Bar))
             throw { type : "type",  message : "'bar' should be a Bar object."};
 
-        let xOffset = 0,
-            beatXOffset = 10;
+        let beatXOffset = 10;
         var beatRectangleList = [];
 
         // Drawing each beat one by one
@@ -198,14 +176,14 @@ var BlockManager = (function () {
             console.log(beat);
 
             // We add an offset between each beat
-            xOffset += beatXOffset;
+            xPosition += beatXOffset;
 
             // Draw the current beat
-            var noteRectangleList = drawBeat(beat, bar.signature, xOffset);
+            var noteRectangleList = drawBeat(beat, bar.signature, xPosition, yPosition);
 
             // We add the size of each note block in the beat to the offset
             noteRectangleList.map((noteRectangle) => {
-                xOffset += noteRectangle[0].width.baseVal.value;
+                xPosition += noteRectangle[0].width.baseVal.value;
             });
 
             // we keep the list of note rectangle in a list
@@ -214,8 +192,23 @@ var BlockManager = (function () {
 
     };
 
+    /**
+     * Add a chop to the internal chop list
+     * The list isn't drawn at this time
+     * @param {Chop} chop - The chop to add to the list
+     */
+    function addChop(chop){
+        // TODO : add the chop to the list
+        // TODO : compute the graphic position of each voice
+    }
 
-
+    /**
+     * Draw the chop list on the screen
+     */
+    function drawChopList()
+    {
+        // TODO : draw every voice of every chop
+    }
 
     return blockManager;
 

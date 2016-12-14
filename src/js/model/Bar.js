@@ -26,13 +26,13 @@ var Bar = (function() {
 
         if (!(beats instanceof Array))
             throw {
-                type : "parameter type",
+                type : "bad parameter type",
                 message : "beats should be an array",
             };
 
         if (!(signature instanceof Object))
             throw {
-                type : "parameter type",
+                type : "bad parameter type",
                 message : `signature should be an object but is '${signature}'`,
             };
 

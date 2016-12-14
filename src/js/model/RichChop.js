@@ -35,9 +35,9 @@ RichChop.prototype.createRichNoteFromRaw = function(rawNote) {
 
     console.log("ma note est : " + rawNote);
 
-    var time, 
+    var time,
         tune,
-        isTernary, 
+        isTernary,
         isDotted,
         isRest;
 
