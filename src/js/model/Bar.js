@@ -10,7 +10,8 @@
 */
 
 /**
- * @class A bar with notes
+ * Class representing a bar with its notes
+ * @class
  */
 var Bar = (function() {
 

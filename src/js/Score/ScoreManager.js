@@ -9,6 +9,9 @@
  *
  */
 
+/**
+ * @module ScoreManager
+ */
 var ScoreManager = (function(VF) {
 
     "use strict";
@@ -25,7 +28,7 @@ var ScoreManager = (function(VF) {
         };
 
         // Module name
-        var _name = "ScoreManager"; 
+        var _name = "ScoreManager";
 
         // Module Method Exposition
         var scoreManager = {
@@ -84,7 +87,7 @@ var ScoreManager = (function(VF) {
                 if (beatNotesSize >= 2) {
                     beams.push(addBeam(vexNotes, newBeatStartIndex, newBeatEndIndex));  // [---- ----] + [----]
                 }
-                
+
 /*              ////// T U P L E T S
                 var shouldBeNotesNumber;
                 if (beatNotesSize == 3) {
@@ -93,7 +96,7 @@ var ScoreManager = (function(VF) {
                 else if (beatNotesSize == 6) {
                     shouldBeNotesNumber = 4;
                 }
-                
+
                 if (typeof(shouldBeNotesNumber) != "undefined") {
                     tuplets.push(createTuplet(vexNotes, newBeatStartIndex, newBeatEndIndex, beatNotesSize, shouldBeNotesNumber));
                 }*/
@@ -145,9 +148,9 @@ var ScoreManager = (function(VF) {
 
         function createVexNotes(notesToConvert) {
             var vexNotes = []
-            
+
             notesToConvert.forEach(function(noteStructure) {
-                
+
                 vexNotes.push(
                     new Vex.Flow.StaveNote({
                         keys: [noteStructure.tune],
@@ -166,10 +169,10 @@ var ScoreManager = (function(VF) {
         }
 
         function createTuplet(notes, first, last, numNotes = 3, numNoteOccupied = 2, ratioed = false) {
-            var tuplet = 
+            var tuplet =
                 new Vex.Flow.Tuplet(notes.slice(first, last), {
-                  num_notes: numNotes, 
-                  notes_occupied: numNoteOccupied, 
+                  num_notes: numNotes,
+                  notes_occupied: numNoteOccupied,
                   ratioed: ratioed,
                 });
 
@@ -208,7 +211,7 @@ var ScoreManager = (function(VF) {
         function example() {
             // Setup the notes array
             function addNotes() {
-             
+
                 var notes = [];
 
                 notes = createVexNotes([
@@ -259,7 +262,7 @@ var ScoreManager = (function(VF) {
                     ].map(function(i){
                         return addBeam(notes, i[0], i[1]);
                     });
-            
+
                 return beams;
             }
 
@@ -272,12 +275,12 @@ var ScoreManager = (function(VF) {
                 return [simpleQuintuplet, simpleSextuplet, simpleTriplet];
             }
 
-            ////// N O T E S 
+            ////// N O T E S
             var notes = addNotes();
-            
+
             ////// B E A M S
             var beams = addBeams(notes);
-            
+
             ////// T U P L E T S
             var tuplets = createTuplets(notes);
 
@@ -288,7 +291,7 @@ var ScoreManager = (function(VF) {
             draw(voice, beams, tuplets);
         }
 
-        
+
 
 
 

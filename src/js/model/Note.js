@@ -9,6 +9,10 @@
  *
  */
 
+/**
+ * Class representing a Note with its characteristics
+ * @class
+ */
 var Note = (function(){
 
     /**

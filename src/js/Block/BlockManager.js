@@ -93,6 +93,7 @@ var BlockManager = (function ()
 
     /**
      * Dessine un rectangle
+     * @method drawRectangle
      * @param  {int} xStart - x position of rectangle to draw (from up-left corner)
      * @param  {int} yStart - y position of rectangle to draw (from up-left corner)
      * @param  {int} xSize - x size (width) of rectangle to draw
@@ -108,6 +109,7 @@ var BlockManager = (function ()
      * Dessine une note
      *     Prend en compte la taille standard d'une note
      *     Définit la longueur de la note en fonction de sa valeur temporelle
+     * @method drawNote
      * @param  {Note} note - The note to draw
      * @param  {int} xStart - x position of note to draw (from up-left corner)
      * @param  {int} yStart - y position of note to draw (from up-left corner)
@@ -120,6 +122,7 @@ var BlockManager = (function ()
 
     /**
      * Dessine un temps
+     * @method drawBeat
      * @param {Note|Array} notes - An array with the beat's notes
      * @param {Object} signature - Signature of bar in which is the beat
      */
@@ -159,6 +162,7 @@ var BlockManager = (function ()
 
     /**
      * Draw a bar
+     * @method drawBar
      * @param {Bar} bar - The bar with all beats to draw
      * @param {Bar} bar - The bar with all beats to draw
      * @param {Bar} bar - The bar with all beats to draw
@@ -195,6 +199,7 @@ var BlockManager = (function ()
     /**
      * Add a chop to the internal chop list
      * The list isn't drawn at this time
+     * @method addChop
      * @param {Chop} chop - The chop to add to the list
      */
     function addChop(chop){
@@ -204,6 +209,7 @@ var BlockManager = (function ()
 
     /**
      * Draw the chop list on the screen
+     * @method drawChopList
      */
     function drawChopList()
     {
