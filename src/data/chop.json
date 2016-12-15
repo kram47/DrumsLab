@@ -1,0 +1,40 @@
+// Exemple de plan au format json
+
+{
+    "chopList" : [
+        {
+            "title" : "Mon Plan",
+            "bpm" : "80",
+            "signature" : "4/4",
+            "voiceList" : [
+                {
+                    "type" : "charleston",
+                    "pattern" : [
+                        ["16", "16", "8"],
+                        ["16", "16", "8"],
+                        ["16", "16", "8"],
+                        ["16", "16", "8"]
+                    ],
+                },
+                {
+                    "type" : "snare",
+                    "pattern" : [
+                        ["8r", "8"],
+                        ["8r", "8"],
+                        ["8r", "8"],
+                        ["8r", "8"],
+                    ],
+                },
+                {
+                    "type" : "kick",
+                    "pattern" : [
+                        ["4", "16"],
+                        ["8d", "16"],
+                        ["4", "16"],
+                        ["8d", "16"],
+                    ],
+                },
+            ]
+        }
+    ]
+}
