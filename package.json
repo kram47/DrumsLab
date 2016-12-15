@@ -27,6 +27,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
-    "gulp-watch": "^4.3.11"
+    "gulp-jsdoc3": "^1.0.1",
+    "gulp-watch": "^4.3.11",
+    "jsdoc": "^3.4.3"
   }
 }
