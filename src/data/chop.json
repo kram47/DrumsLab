@@ -14,7 +14,7 @@
                         ["16", "16", "8"],
                         ["16", "16", "8"],
                         ["16", "16", "8"]
-                    ],
+                    ]
                 },
                 {
                     "type" : "snare",
@@ -22,8 +22,8 @@
                         ["8r", "8"],
                         ["8r", "8"],
                         ["8r", "8"],
-                        ["8r", "8"],
-                    ],
+                        ["8r", "8"]
+                    ]
                 },
                 {
                     "type" : "kick",
@@ -31,10 +31,29 @@
                         ["4", "16"],
                         ["8d", "16"],
                         ["4", "16"],
-                        ["8d", "16"],
-                    ],
-                },
+                        ["8d", "16"]
+                    ]
+                }
             ]
         }
     ]
 }
+
+// Types : charleston, snare, kick, tom, "n'importe quoi d'autre"
+
+// Note :
+//  - Temps :    2^x (1, 2, 4, 8, 16, 32, 64 , ...)
+//  - Silence :  r (rest)
+//  - Ternaire : t (ternary)
+//  - Pointé :   d (dotted)
+//  - Doigté :   f.n (fingering.normal),
+//               f.f (fingering.fla),
+//               f.r (fingering.ra,
+//               f.c (fingering.cheese)
+//  - Coté :     s.rh (Side.Right Hand)
+//               s.lh (Side.left Hand)
+//               s.rf (Side.Right Foot)
+//               s.rf (Side.left Foot)
+//  - Accent :   a.n (Accent.Normal)
+//               a.a (Accent.Accentuated)
+//               a.g (Accent.Ghost)
